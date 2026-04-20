@@ -2,1150 +2,1064 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-<title>Ethics — Tactical Mock Exam</title>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;0,700;1,500;1,700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ethics Mock Exam — Utilitarianism & Deontology</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-:root{
-  --bg:#060d1f;--bg2:#0b1530;--card:#0e1e3a;--card2:#112244;
-  --blue1:#1a6bff;--blue2:#3d8bff;--blue3:#6aaeff;--cyan:#38d9f5;
-  --text:#e8f0ff;--muted:#6a82aa;--correct:#34d399;--wrong:#fb7185;
-  --warn:#fbbf24;--border:rgba(100,160,255,0.13);--border2:rgba(100,160,255,0.28);
-  --glow:rgba(26,107,255,0.35);--radius:14px;
-}
-body.light{
-  --bg:#eef3ff;--bg2:#dde8ff;--card:#ffffff;--card2:#f0f5ff;
-  --text:#0a1628;--muted:#5570a0;--border:rgba(26,107,255,0.15);
-  --border2:rgba(26,107,255,0.3);--glow:rgba(26,107,255,0.18);
-  --blue3:#1a5acc;--cyan:#0088aa;
-}
-*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
-html{scroll-behavior:smooth;-webkit-text-size-adjust:100%;}
-body{background:var(--bg);color:var(--text);font-family:'Outfit',sans-serif;min-height:100vh;overflow-x:hidden;-webkit-font-smoothing:antialiased;transition:background .4s,color .4s;}
+  :root {
+    --bg: #0f0e17;
+    --surface: #1a1928;
+    --card: #222136;
+    --border: #2e2c4a;
+    --util: #6c63ff;
+    --util-light: #8b85ff;
+    --deont: #00c9a7;
+    --deont-light: #2edfc7;
+    --gold: #f5a623;
+    --rose: #ff6b6b;
+    --text: #e8e6f0;
+    --muted: #8b89a0;
+    --white: #ffffff;
+    --correct: #00c9a7;
+    --wrong: #ff6b6b;
+    --unanswered: #f5a623;
+  }
 
-/* BG */
-#stars{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden;}
-.star{position:absolute;border-radius:50%;background:#fff;animation:twinkle var(--d,3s) ease-in-out infinite alternate;}
-body.light .star{background:var(--blue1);}
-@keyframes twinkle{from{opacity:.04;transform:scale(.8);}to{opacity:.45;transform:scale(1.2);}}
-.neb{position:fixed;border-radius:50%;pointer-events:none;z-index:0;filter:blur(80px);animation:drift 14s ease-in-out infinite alternate;}
-.neb1{width:600px;height:400px;top:-120px;left:-120px;background:radial-gradient(ellipse,rgba(26,107,255,.18) 0%,transparent 70%);}
-.neb2{width:500px;height:500px;bottom:-150px;right:-120px;background:radial-gradient(ellipse,rgba(56,217,245,.12) 0%,transparent 70%);}
-@keyframes drift{to{transform:translate(28px,18px) scale(1.05);}}
+  * { box-sizing: border-box; margin: 0; padding: 0; }
 
-/* CONFETTI */
-.cfp{position:fixed;pointer-events:none;z-index:9999;border-radius:2px;animation:cfall linear forwards;}
-@keyframes cfall{0%{transform:translateY(-10px) rotate(0deg);opacity:1;}100%{transform:translateY(105vh) rotate(720deg);opacity:0;}}
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
 
-/* XP FLOAT */
-.xpf{position:fixed;z-index:9998;pointer-events:none;font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:700;color:var(--cyan);text-shadow:0 0 16px var(--cyan);animation:xprise 1.1s ease forwards;}
-@keyframes xprise{0%{opacity:1;transform:translateY(0) scale(1);}100%{opacity:0;transform:translateY(-70px) scale(1.3);}}
+  /* NOISE TEXTURE */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.5;
+  }
 
-/* TOAST */
-.toast{position:fixed;top:76px;left:50%;transform:translateX(-50%) translateY(-16px);z-index:9997;background:linear-gradient(135deg,var(--blue1),var(--cyan));color:#fff;border-radius:100px;padding:9px 22px;font-weight:700;font-size:13px;box-shadow:0 8px 28px var(--glow);opacity:0;pointer-events:none;transition:all .4s cubic-bezier(.34,1.56,.64,1);white-space:nowrap;}
-.toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+  /* LANDING SCREEN */
+  #landing {
+    position: relative;
+    z-index: 1;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    text-align: center;
+  }
 
-/* NAV SIDEBAR */
-.qnav{position:fixed;right:0;top:50%;transform:translateY(-50%);z-index:600;background:var(--card);border:1px solid var(--border2);border-radius:12px 0 0 12px;padding:8px 6px;display:flex;flex-direction:column;gap:3px;max-height:55vh;overflow-y:auto;scrollbar-width:none;}
-.qnav::-webkit-scrollbar{display:none;}
-.qnb{width:20px;height:20px;border-radius:4px;border:1px solid var(--border2);background:var(--card2);cursor:pointer;font-size:7px;font-weight:700;color:var(--muted);display:flex;align-items:center;justify-content:center;transition:all .15s;-webkit-tap-highlight-color:transparent;}
-.qnb:hover{border-color:var(--blue2);color:var(--blue3);}
-.qnb.ok{background:rgba(52,211,153,.25);border-color:var(--correct);color:var(--correct);}
-.qnb.bad{background:rgba(251,113,133,.2);border-color:var(--wrong);color:var(--wrong);}
-@media(max-width:720px){.qnav{display:none;}}
+  .landing-glow {
+    position: absolute;
+    width: 600px; height: 600px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(108,99,255,0.15) 0%, transparent 70%);
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+  }
 
-/* KEY HINT */
-.keyhint{position:fixed;bottom:86px;right:14px;z-index:600;background:var(--card2);border:1px solid var(--border2);border-radius:10px;padding:9px 12px;font-size:10px;color:var(--muted);line-height:1.9;max-width:170px;}
-.keyhint kbd{background:var(--card);border:1px solid var(--border2);border-radius:3px;padding:1px 5px;font-size:9px;color:var(--blue3);font-family:'Outfit',sans-serif;}
-@media(max-width:600px){.keyhint{display:none;}}
+  .landing-badge {
+    display: inline-block;
+    background: linear-gradient(135deg, var(--util), var(--deont));
+    color: #fff;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    padding: 0.35rem 1rem;
+    border-radius: 50px;
+    margin-bottom: 1.5rem;
+    text-transform: uppercase;
+  }
 
-/* ── LANDING ── */
-#landing{position:relative;z-index:10;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;padding:40px 20px;text-align:center;animation:fadeUp .9s ease both;}
-.logo{width:78px;height:78px;border-radius:22px;background:linear-gradient(135deg,var(--blue1),var(--cyan));display:flex;align-items:center;justify-content:center;font-size:36px;margin:0 auto 22px;animation:pglow 3s ease-in-out infinite;}
-@keyframes pglow{0%,100%{box-shadow:0 0 28px var(--glow);}50%{box-shadow:0 0 60px rgba(26,107,255,.6),0 0 90px rgba(56,217,245,.3);}}
-#landing h1{font-family:'Cormorant Garamond',serif;font-size:clamp(2.5rem,8vw,5.2rem);font-weight:700;line-height:1.0;letter-spacing:-1px;background:linear-gradient(135deg,var(--text) 0%,var(--blue3) 50%,var(--cyan) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;max-width:680px;}
-#landing h1 em{font-style:italic;}
-.credit{font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--muted);margin-top:7px;opacity:.75;}
-.credit span{color:var(--cyan);font-weight:700;letter-spacing:2px;}
-#landing>p.subdesc{margin-top:12px;color:var(--muted);font-size:clamp(13px,3.5vw,15px);max-width:480px;line-height:1.75;}
-/* feature grid — 4 per row, last row centred */
-.fgrid{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin:24px 0;width:100%;max-width:560px;}
-.fcard{background:var(--card);border:1px solid var(--border2);border-radius:12px;padding:13px 10px;text-align:center;width:calc(25% - 8px);min-width:100px;flex:0 0 auto;}
-@media(max-width:480px){.fcard{width:calc(50% - 6px);}}
-.fcard .fi{font-size:20px;margin-bottom:5px;}
-.fcard .fv{font-family:'Cormorant Garamond',serif;font-size:1.4rem;font-weight:700;color:var(--cyan);}
-.fcard .fl{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-top:2px;}
-.diff-row{display:flex;gap:8px;width:100%;max-width:330px;margin-bottom:12px;}
-.dbtn{flex:1;padding:9px;border-radius:9px;border:1px solid var(--border2);background:var(--card);cursor:pointer;font-size:11px;font-weight:600;color:var(--muted);transition:all .2s;text-align:center;-webkit-tap-highlight-color:transparent;}
-.dbtn.easy.on{background:rgba(52,211,153,.2);border-color:var(--correct);color:var(--correct);}
-.dbtn.medium.on{background:rgba(251,191,36,.18);border-color:var(--warn);color:var(--warn);}
-.dbtn.hard.on{background:rgba(251,113,133,.18);border-color:var(--wrong);color:var(--wrong);}
-.togg-list{display:flex;flex-direction:column;gap:9px;width:100%;max-width:330px;margin-bottom:10px;}
-.togg{display:flex;align-items:center;gap:9px;background:var(--card);border:1px solid var(--border2);border-radius:11px;padding:11px 14px;cursor:pointer;-webkit-tap-highlight-color:transparent;}
-.togg:hover{border-color:var(--blue2);}
-.togg-label{font-size:12px;color:var(--muted);flex:1;}
-.sw{width:36px;height:20px;border-radius:100px;background:var(--bg2);border:1px solid var(--border2);position:relative;transition:background .2s;flex-shrink:0;}
-.sw.on{background:var(--blue1);}
-.sw::after{content:'';position:absolute;top:3px;left:3px;width:12px;height:12px;border-radius:50%;background:#fff;transition:transform .2s;}
-.sw.on::after{transform:translateX(16px);}
-/* ── THEME PICKER ── */
-.theme-wrap{width:100%;max-width:330px;margin-bottom:10px;}
-.theme-lbl{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:8px;text-align:left;padding-left:2px;}
-.theme-row{display:flex;gap:7px;justify-content:center;}
-.thbtn{flex:1;min-width:52px;border-radius:10px;border:2px solid transparent;padding:8px 4px 7px;cursor:pointer;text-align:center;transition:all .22s;-webkit-tap-highlight-color:transparent;position:relative;}
-.thbtn .thdot{width:20px;height:20px;border-radius:50%;margin:0 auto 5px;border:2px solid rgba(255,255,255,.18);}
-.thbtn .thlbl{font-size:8px;letter-spacing:.5px;text-transform:uppercase;font-weight:700;display:block;white-space:nowrap;}
-.thbtn.ton{border-color:rgba(255,255,255,.55);box-shadow:0 0 0 2px rgba(255,255,255,.12);}
-/* swatch colours per theme */
-.th-midnight{background:#0b1530;color:#6aaeff;}.th-midnight .thdot{background:linear-gradient(135deg,#1a6bff,#38d9f5);}
-.th-ocean{background:#021e30;color:#00cfff;}.th-ocean .thdot{background:linear-gradient(135deg,#005f8e,#00cfff);}
-.th-forest{background:#0d2018;color:#4ade80;}.th-forest .thdot{background:linear-gradient(135deg,#166534,#4ade80);}
-.th-sunset{background:#1f0a08;color:#fb923c;}.th-sunset .thdot{background:linear-gradient(135deg,#c2410c,#fb923c);}
-.th-light{background:#e8eeff;color:#1a5acc;}.th-light .thdot{background:linear-gradient(135deg,#1a6bff,#38d9f5);}
-/* body theme overrides */
-body.th-ocean{--bg:#021e30;--bg2:#032c46;--card:#04344f;--card2:#053d5c;--blue1:#0099cc;--blue2:#00b8f0;--blue3:#00cfff;--cyan:#7eeeff;--text:#ddf6ff;--muted:#4a8fa8;--border:rgba(0,180,255,.13);--border2:rgba(0,180,255,.28);--glow:rgba(0,153,204,.4);}
-body.th-ocean .neb1{background:radial-gradient(ellipse,rgba(0,100,200,.2) 0%,transparent 70%);}
-body.th-ocean .neb2{background:radial-gradient(ellipse,rgba(0,207,255,.14) 0%,transparent 70%);}
-body.th-forest{--bg:#0a1a0e;--bg2:#0f2214;--card:#122a18;--card2:#163320;--blue1:#16a34a;--blue2:#22c55e;--blue3:#4ade80;--cyan:#86efac;--text:#dcfce7;--muted:#4a7c5a;--border:rgba(52,211,100,.13);--border2:rgba(52,211,100,.28);--glow:rgba(22,163,74,.4);}
-body.th-forest .neb1{background:radial-gradient(ellipse,rgba(22,163,74,.2) 0%,transparent 70%);}
-body.th-forest .neb2{background:radial-gradient(ellipse,rgba(134,239,172,.14) 0%,transparent 70%);}
-body.th-sunset{--bg:#180806;--bg2:#220c08;--card:#2a1008;--card2:#341408;--blue1:#ea580c;--blue2:#f97316;--blue3:#fb923c;--cyan:#fed7aa;--text:#fff7ed;--muted:#92623a;--border:rgba(249,115,22,.13);--border2:rgba(249,115,22,.28);--glow:rgba(234,88,12,.4);}
-body.th-sunset .neb1{background:radial-gradient(ellipse,rgba(234,88,12,.2) 0%,transparent 70%);}
-body.th-sunset .neb2{background:radial-gradient(ellipse,rgba(251,146,60,.14) 0%,transparent 70%);}
-.start-btn{background:linear-gradient(135deg,var(--blue1),var(--cyan));color:#fff;font-family:'Outfit',sans-serif;font-weight:700;font-size:clamp(14px,3.5vw,16px);border:none;border-radius:100px;padding:15px 50px;cursor:pointer;box-shadow:0 8px 28px var(--glow);transition:transform .2s,box-shadow .2s;-webkit-tap-highlight-color:transparent;margin-top:6px;}
-.start-btn:hover{transform:translateY(-3px);box-shadow:0 14px 40px rgba(26,107,255,.5);}
-.start-btn:active{transform:none;}
+  .landing-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.8rem, 7vw, 5.5rem);
+    font-weight: 900;
+    line-height: 1.05;
+    margin-bottom: 1rem;
+    background: linear-gradient(135deg, var(--white) 30%, var(--util-light));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
 
-/* ── QUIZ HEADER ── */
-#qscreen{display:none;position:relative;z-index:10;}
-.qhdr{position:sticky;top:0;z-index:50;background:rgba(6,13,31,.94);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:10px 14px 0;}
-body.light .qhdr{background:rgba(238,243,255,.94);}
-.qhdr-row1{max-width:820px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap;padding-bottom:8px;}
-.qhdr-row2{max-width:820px;margin:0 auto;display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding-bottom:8px;}
-.qhtitle{font-family:'Cormorant Garamond',serif;font-size:clamp(14px,3.5vw,18px);font-weight:700;background:linear-gradient(90deg,var(--text),var(--blue3));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;white-space:nowrap;}
-.timerwrap{display:flex;align-items:center;gap:6px;background:var(--card2);border:1px solid var(--border2);border-radius:100px;padding:5px 13px;}
-.timerval{font-family:'Cormorant Garamond',serif;font-size:clamp(13px,3vw,17px);font-weight:700;color:var(--cyan);min-width:52px;text-align:center;transition:color .3s;}
-.timerval.warn{color:var(--warn);animation:tpulse 1s ease-in-out infinite;}
-.timerval.danger{color:var(--wrong);animation:tpulse .5s ease-in-out infinite;}
-@keyframes tpulse{0%,100%{opacity:1;}50%{opacity:.4;}}
-.streak-chip{display:flex;align-items:center;gap:5px;background:var(--card2);border:1px solid var(--border2);border-radius:100px;padding:4px 11px;font-size:12px;font-weight:700;color:var(--warn);}
-.streak-chip.hot{animation:sglow .8s ease-in-out infinite alternate;}
-@keyframes sglow{to{box-shadow:0 0 14px rgba(251,191,36,.5);}}
-.xpwrap{display:flex;align-items:center;gap:6px;}
-.xplabel{font-size:11px;color:var(--muted);white-space:nowrap;}
-.xplabel b{color:var(--cyan);font-family:'Cormorant Garamond',serif;font-size:13px;}
-.xptrack{width:70px;height:5px;background:rgba(100,160,255,.1);border-radius:10px;overflow:hidden;}
-.xpfill{height:100%;background:linear-gradient(90deg,var(--blue1),var(--cyan));width:0%;border-radius:10px;transition:width .5s ease;}
-.ibtn{background:var(--card2);border:1px solid var(--border2);border-radius:100px;padding:5px 11px;cursor:pointer;font-size:14px;transition:all .2s;-webkit-tap-highlight-color:transparent;line-height:1;user-select:none;}
-.ibtn:hover{border-color:var(--blue2);transform:scale(1.08);}
-.sc{display:flex;align-items:center;gap:5px;background:var(--card2);border:1px solid var(--border);border-radius:100px;padding:4px 11px;font-size:clamp(10px,2.5vw,12px);color:var(--muted);}
-.sc b{font-weight:600;font-size:clamp(11px,3vw,13px);}
-.sc b.a{color:var(--blue3);}
-.sc b.c{color:var(--correct);}
-.sc b.w{color:var(--wrong);}
-.sc b.h{color:var(--warn);}
-.ptrack{height:2px;background:rgba(100,160,255,.1);overflow:hidden;}
-.pfill{height:100%;width:0%;background:linear-gradient(90deg,var(--blue1),var(--cyan));transition:width .5s ease;}
+  .landing-title span {
+    background: linear-gradient(135deg, var(--deont-light), var(--gold));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
 
-/* MAIN */
-main{max-width:820px;margin:0 auto;padding:20px 14px 130px;}
-.ssep{font-size:10px;letter-spacing:4px;text-transform:uppercase;color:var(--blue3);margin:34px 0 12px;display:flex;align-items:center;gap:10px;}
-.ssep::before{content:'';width:14px;height:2px;background:var(--blue1);border-radius:2px;}
-.ssep::after{content:'';flex:1;height:1px;background:var(--border);}
+  .landing-sub {
+    color: var(--muted);
+    font-size: 1.05rem;
+    max-width: 500px;
+    line-height: 1.7;
+    margin-bottom: 2.5rem;
+  }
 
-/* CARDS */
-.qcard{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:clamp(15px,4vw,24px);margin-bottom:11px;position:relative;overflow:hidden;transition:border-color .3s;animation:fadeUp .3s ease both;}
-.qcard::before{content:'';position:absolute;top:0;left:0;width:3px;height:100%;background:linear-gradient(180deg,var(--blue1),var(--cyan));opacity:.3;transition:opacity .3s;}
-.qcard.done::before{opacity:1;}
-.qcard.ok{border-color:rgba(52,211,153,.3);}
-.qcard.ok::before{background:var(--correct);}
-.qcard.bad{border-color:rgba(251,113,133,.3);}
-.qcard.bad::before{background:var(--wrong);}
-@keyframes shake{0%,100%{transform:translateX(0);}25%,75%{transform:translateX(-5px);}50%{transform:translateX(5px);}}
-.shake{animation:shake .35s ease;}
-@keyframes fadeUp{from{opacity:0;transform:translateY(14px);}to{opacity:1;transform:translateY(0);}}
+  .stats-row {
+    display: flex;
+    gap: 2rem;
+    justify-content: center;
+    margin-bottom: 3rem;
+    flex-wrap: wrap;
+  }
 
-/* BOOKMARK BTN */
-.bmbtn{position:absolute;top:13px;right:13px;background:none;border:none;cursor:pointer;font-size:15px;opacity:.35;transition:all .2s;z-index:5;-webkit-tap-highlight-color:transparent;}
-.bmbtn:hover{opacity:1;transform:scale(1.2);}
-.bmbtn.on{opacity:1;filter:drop-shadow(0 0 5px var(--warn));}
+  .stat-pill {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1rem 1.5rem;
+    text-align: center;
+    min-width: 120px;
+  }
 
-/* META ROW */
-.qmeta{display:flex;align-items:center;gap:6px;margin-bottom:9px;flex-wrap:wrap;padding-right:28px;}
-.qnum{width:22px;height:22px;border-radius:6px;background:linear-gradient(135deg,var(--blue1),var(--blue3));display:inline-flex;align-items:center;justify-content:center;font-size:9px;color:#fff;font-weight:700;flex-shrink:0;}
-.qmetatxt{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);}
-.tbadge{display:inline-block;font-size:8px;letter-spacing:2px;text-transform:uppercase;padding:2px 8px;border-radius:100px;font-weight:600;}
-.tmcq{background:rgba(26,107,255,.15);color:var(--blue3);border:1px solid rgba(26,107,255,.28);}
-.ttf{background:rgba(56,217,245,.13);color:var(--cyan);border:1px solid rgba(56,217,245,.28);}
-.tid{background:rgba(52,211,153,.13);color:var(--correct);border:1px solid rgba(52,211,153,.28);}
-.tfib{background:rgba(251,191,36,.13);color:var(--warn);border:1px solid rgba(251,191,36,.28);}
-.dbadge{display:inline-block;font-size:8px;letter-spacing:1px;text-transform:uppercase;padding:2px 7px;border-radius:100px;font-weight:600;}
-.deasy{background:rgba(52,211,153,.12);color:var(--correct);border:1px solid rgba(52,211,153,.25);}
-.dmed{background:rgba(251,191,36,.12);color:var(--warn);border:1px solid rgba(251,191,36,.25);}
-.dhard{background:rgba(251,113,133,.12);color:var(--wrong);border:1px solid rgba(251,113,133,.25);}
+  .stat-pill .num {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem;
+    font-weight: 700;
+    display: block;
+  }
 
-.qtxt{font-size:clamp(14px,3.5vw,15.5px);line-height:1.7;margin-bottom:15px;color:var(--text);}
+  .stat-pill .label {
+    font-size: 0.75rem;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
 
-/* HINT */
-.hbtn{background:none;border:1px dashed var(--border2);border-radius:7px;color:var(--muted);font-size:11px;padding:4px 11px;cursor:pointer;transition:all .2s;margin-bottom:11px;font-family:'Outfit',sans-serif;-webkit-tap-highlight-color:transparent;}
-.hbtn:hover:not(:disabled){border-color:var(--blue2);color:var(--blue3);}
-.hbtn:disabled{opacity:.35;cursor:not-allowed;}
-.hbox{background:rgba(26,107,255,.07);border:1px solid rgba(26,107,255,.2);border-radius:8px;padding:9px 13px;font-size:12px;color:var(--blue3);margin-bottom:11px;display:none;line-height:1.5;}
-.hbox.show{display:block;animation:fadeUp .3s ease;}
+  .stat-pill.util .num { color: var(--util-light); }
+  .stat-pill.deont .num { color: var(--deont-light); }
+  .stat-pill.gold .num { color: var(--gold); }
 
-/* MCQ */
-.opts{display:flex;flex-direction:column;gap:6px;}
-.opt{display:flex;align-items:center;gap:10px;padding:clamp(9px,2.5vw,12px) clamp(11px,3vw,15px);border-radius:9px;border:1px solid var(--border);cursor:pointer;transition:all .18s;background:rgba(255,255,255,.015);-webkit-tap-highlight-color:transparent;user-select:none;touch-action:manipulation;}
-.opt:hover:not(.dis){border-color:rgba(26,107,255,.5);background:rgba(26,107,255,.07);transform:translateX(3px);}
-.opt:active:not(.dis){transform:translateX(1px);}
-.oletter{width:27px;height:27px;min-width:27px;border-radius:6px;border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:var(--muted);font-family:'Cormorant Garamond',serif;transition:all .18s;flex-shrink:0;}
-.otxt{font-size:clamp(13px,3vw,14px);line-height:1.4;}
-.opt.sel{border-color:var(--blue2);background:rgba(26,107,255,.1);}
-.opt.sel .oletter{background:var(--blue1);color:#fff;border-color:var(--blue1);}
-.opt.cor{border-color:var(--correct);background:rgba(52,211,153,.08);}
-.opt.cor .oletter{background:var(--correct);color:#000;border-color:var(--correct);}
-.opt.wrg{border-color:var(--wrong);background:rgba(251,113,133,.08);}
-.opt.wrg .oletter{background:var(--wrong);color:#000;border-color:var(--wrong);}
-.opt.dis{cursor:default;pointer-events:none;}
-.opt.dim{opacity:.25;}
+  .btn-start {
+    background: linear-gradient(135deg, var(--util), var(--deont));
+    color: #fff;
+    border: none;
+    padding: 1rem 3rem;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 1.05rem;
+    font-weight: 600;
+    border-radius: 50px;
+    cursor: pointer;
+    letter-spacing: 0.05em;
+    transition: all 0.3s ease;
+    box-shadow: 0 0 30px rgba(108,99,255,0.4);
+    position: relative;
+    z-index: 1;
+  }
 
-/* T/F */
-.tfopts{display:flex;gap:10px;flex-wrap:wrap;}
-.tfbtn{flex:1;min-width:90px;padding:13px 16px;border-radius:11px;border:1px solid var(--border2);background:rgba(255,255,255,.015);cursor:pointer;font-size:13px;font-weight:600;text-align:center;color:var(--text);transition:all .2s;-webkit-tap-highlight-color:transparent;touch-action:manipulation;user-select:none;}
-.tfbtn:hover:not(.dis){transform:translateY(-2px);}
-.tfbtn.tbtn:hover:not(.dis){border-color:var(--correct);background:rgba(52,211,153,.1);color:var(--correct);}
-.tfbtn.fbtn:hover:not(.dis){border-color:var(--wrong);background:rgba(251,113,133,.1);color:var(--wrong);}
-.tfbtn.cor{border-color:var(--correct) !important;background:rgba(52,211,153,.14) !important;color:var(--correct) !important;}
-.tfbtn.wrg{border-color:var(--wrong) !important;background:rgba(251,113,133,.14) !important;color:var(--wrong) !important;}
-.tfbtn.dis{cursor:default;pointer-events:none;}
-.tfbtn.dim{opacity:.25;}
+  .btn-start:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 0 50px rgba(108,99,255,0.6);
+  }
 
-/* ID */
-.idwrap{display:flex;flex-direction:column;gap:9px;}
-.idinput{background:var(--card2);border:1px solid var(--border2);border-radius:9px;padding:11px 15px;color:var(--text);font-family:'Outfit',sans-serif;font-size:14px;outline:none;transition:border-color .2s,box-shadow .2s;width:100%;}
-.idinput:focus{border-color:var(--blue2);box-shadow:0 0 0 3px rgba(26,107,255,.14);}
-.idinput.cor{border-color:var(--correct);background:rgba(52,211,153,.05);}
-.idinput.wrg{border-color:var(--wrong);background:rgba(251,113,133,.05);}
-.idinput:disabled{opacity:.65;}
-.idsub,.fibsub{background:linear-gradient(135deg,var(--blue1),var(--blue2));color:#fff;border:none;border-radius:9px;padding:10px 22px;cursor:pointer;font-size:12px;font-weight:600;font-family:'Outfit',sans-serif;transition:all .2s;-webkit-tap-highlight-color:transparent;align-self:flex-start;}
-.fibsub{display:block;margin-top:10px;}
-.idsub:hover:not(:disabled),.fibsub:hover:not(:disabled){transform:translateY(-1px);box-shadow:0 5px 18px var(--glow);}
-.idsub:disabled,.fibsub:disabled{opacity:.38;cursor:not-allowed;transform:none !important;}
+  /* QUIZ SCREEN */
+  #quiz-screen {
+    display: none;
+    position: relative;
+    z-index: 1;
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem 4rem;
+  }
 
-/* FIB */
-.fibinput{display:inline-block;background:rgba(26,107,255,.07);border:none;border-bottom:2px solid var(--blue2);color:var(--text);font-family:'Outfit',sans-serif;font-size:14px;padding:2px 8px;margin:0 3px;min-width:110px;max-width:190px;outline:none;border-radius:3px 3px 0 0;transition:all .2s;vertical-align:middle;}
-.fibinput:focus{background:rgba(26,107,255,.12);border-bottom-color:var(--cyan);}
-.fibinput.cor{border-bottom-color:var(--correct) !important;background:rgba(52,211,153,.08) !important;}
-.fibinput.wrg{border-bottom-color:var(--wrong) !important;background:rgba(251,113,133,.08) !important;}
-.fibinput:disabled{opacity:.65;}
+  /* HEADER */
+  .quiz-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 0;
+    margin-bottom: 2rem;
+    border-bottom: 1px solid var(--border);
+    position: sticky;
+    top: 0;
+    background: var(--bg);
+    z-index: 10;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
 
-/* FEEDBACK */
-.fb{margin-top:10px;padding:9px 13px;border-radius:8px;font-size:clamp(11px,3vw,12px);line-height:1.55;display:none;}
-.fb.show{display:block;}
-.fb.ok{background:rgba(52,211,153,.1);color:var(--correct);border:1px solid rgba(52,211,153,.2);}
-.fb.bad{background:rgba(251,113,133,.1);color:var(--wrong);border:1px solid rgba(251,113,133,.2);}
+  .quiz-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, var(--util-light), var(--deont-light));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
 
-/* SUBMIT BAR */
-.subbar{position:fixed;bottom:0;left:0;right:0;z-index:55;padding:11px 14px;background:rgba(6,13,31,.96);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-top:1px solid var(--border);}
-body.light .subbar{background:rgba(238,243,255,.96);}
-.subbar-inner{max-width:820px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:12px;}
-.subbar-inner span{font-size:clamp(11px,3vw,13px);color:var(--muted);}
-.subbar-inner span b{color:var(--blue3);}
-.subbtn{background:linear-gradient(135deg,var(--blue1),var(--cyan));color:#fff;font-family:'Outfit',sans-serif;font-weight:700;font-size:clamp(13px,3vw,14px);border:none;border-radius:100px;padding:11px 26px;cursor:pointer;white-space:nowrap;box-shadow:0 4px 14px var(--glow);transition:transform .2s,box-shadow .2s,opacity .2s;-webkit-tap-highlight-color:transparent;}
-.subbtn:disabled{opacity:.32;cursor:not-allowed;box-shadow:none;}
-.subbtn:not(:disabled):hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(26,107,255,.45);}
+  .quiz-meta {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
 
-/* REVIEW PANEL */
-#revpanel{display:none;position:fixed;inset:0;z-index:300;background:rgba(6,13,31,.96);backdrop-filter:blur(20px);overflow-y:auto;animation:fadeUp .3s ease;}
-.revinner{max-width:680px;margin:0 auto;padding:28px 18px;}
-.revtitle{font-family:'Cormorant Garamond',serif;font-size:1.8rem;font-weight:700;color:var(--blue3);margin-bottom:18px;display:flex;align-items:center;justify-content:space-between;gap:10px;}
-.revclosebtn{background:var(--card2);border:1px solid var(--border2);border-radius:7px;padding:5px 13px;font-size:12px;color:var(--muted);cursor:pointer;-webkit-tap-highlight-color:transparent;}
-.revclosebtn:hover{color:var(--text);}
-.ritem{background:var(--card);border:1px solid var(--border2);border-radius:11px;padding:14px;margin-bottom:9px;}
-.ritemq{font-size:13px;color:var(--text);margin-bottom:7px;line-height:1.5;}
-.ritemfoot{font-size:11px;display:flex;gap:10px;flex-wrap:wrap;align-items:center;}
-.rjump{color:var(--blue3);cursor:pointer;text-decoration:underline;font-size:11px;}
-.rjump:hover{color:var(--cyan);}
+  .q-counter {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.8rem;
+    color: var(--muted);
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 0.3rem 0.75rem;
+    border-radius: 50px;
+  }
 
-/* TIMEUP */
-#timeup{display:none;position:fixed;inset:0;z-index:200;background:rgba(6,13,31,.97);backdrop-filter:blur(20px);flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:30px;}
-#timeup h2{font-family:'Cormorant Garamond',serif;font-size:clamp(2rem,6vw,3.2rem);font-weight:700;color:var(--wrong);margin-bottom:10px;}
-#timeup p{color:var(--muted);margin-bottom:24px;font-size:14px;}
+  .score-live {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.8rem;
+    color: var(--deont-light);
+    background: rgba(0,201,167,0.1);
+    border: 1px solid rgba(0,201,167,0.3);
+    padding: 0.3rem 0.75rem;
+    border-radius: 50px;
+  }
 
-/* RESULTS */
-#results{display:none;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;padding:38px 18px;text-align:center;position:relative;z-index:10;}
-.ringwrap{position:relative;margin:0 auto 20px;width:clamp(120px,28vw,160px);height:clamp(120px,28vw,160px);}
-.ringsvg{position:absolute;inset:0;width:100%;height:100%;}
-.ringinner{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;}
-.ringpct{font-family:'Cormorant Garamond',serif;font-size:clamp(1.9rem,6vw,2.6rem);font-weight:700;background:linear-gradient(135deg,var(--blue3),var(--cyan));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
-.ringlbl{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);}
-#results h2{font-family:'Cormorant Garamond',serif;font-size:clamp(1.7rem,5vw,2.4rem);font-weight:700;margin-bottom:8px;}
-#results>p{color:var(--muted);font-size:clamp(12px,3vw,14px);max-width:420px;line-height:1.75;}
-.gbadge{display:inline-block;margin-bottom:12px;font-size:10px;letter-spacing:3px;text-transform:uppercase;padding:5px 20px;border-radius:100px;font-weight:600;}
-.gbadge.pass{background:rgba(52,211,153,.14);color:var(--correct);border:1px solid rgba(52,211,153,.28);}
-.gbadge.fail{background:rgba(251,113,133,.14);color:var(--wrong);border:1px solid rgba(251,113,133,.28);}
-.resgrid{display:flex;gap:9px;flex-wrap:wrap;justify-content:center;margin:20px 0;}
-.rcard{background:var(--card);border:1px solid var(--border2);border-radius:11px;padding:12px 16px;text-align:center;min-width:72px;}
-.rcard .rv{font-family:'Cormorant Garamond',serif;font-size:clamp(1.3rem,4.5vw,1.7rem);font-weight:700;}
-.rcard .rl{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-top:3px;}
-.rcard.sc .rv{background:linear-gradient(135deg,var(--blue3),var(--cyan));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
-.rcard.co .rv{color:var(--correct);}
-.rcard.wr .rv{color:var(--wrong);}
-.rcard.xp .rv{color:var(--cyan);}
-.rcard.st .rv{color:var(--warn);}
-.bdtitle{font-family:'Cormorant Garamond',serif;font-size:.95rem;font-weight:700;color:var(--blue3);margin:18px 0 10px;letter-spacing:2px;text-transform:uppercase;}
-.bdgrid{display:flex;gap:7px;flex-wrap:wrap;justify-content:center;margin-bottom:18px;}
-.bdcard{background:var(--card);border:1px solid var(--border);border-radius:9px;padding:9px 12px;min-width:100px;text-align:center;}
-.bdcard .bdt{font-size:9px;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-bottom:5px;}
-.bdcard .bds{font-family:'Cormorant Garamond',serif;font-size:1.2rem;font-weight:700;color:var(--blue3);}
-.actbtns{display:flex;gap:9px;flex-wrap:wrap;justify-content:center;margin-top:6px;}
-.btnprimary{background:linear-gradient(135deg,var(--blue1),var(--cyan));color:#fff;font-family:'Outfit',sans-serif;font-weight:600;font-size:clamp(12px,3vw,14px);border:none;border-radius:100px;padding:13px 32px;cursor:pointer;box-shadow:0 5px 20px var(--glow);transition:transform .2s,box-shadow .2s;-webkit-tap-highlight-color:transparent;}
-.btnprimary:hover{transform:translateY(-2px);box-shadow:0 9px 28px rgba(26,107,255,.45);}
-.btnghost{background:none;color:var(--muted);font-family:'Outfit',sans-serif;font-weight:500;font-size:clamp(12px,3vw,14px);border:1px solid var(--border2);border-radius:100px;padding:13px 32px;cursor:pointer;transition:all .2s;-webkit-tap-highlight-color:transparent;}
-.btnghost:hover{border-color:var(--blue2);color:var(--text);}
+  /* PROGRESS BAR */
+  .progress-wrap {
+    margin-bottom: 2rem;
+  }
 
-@media(max-width:400px){.resgrid{gap:6px;}.rcard{padding:10px 10px;min-width:62px;}.bdgrid{gap:5px;}.bdcard{min-width:88px;}}
-@media(min-width:768px){main{padding:22px 22px 130px;}.qhdr{padding:10px 22px 0;}.subbar{padding:13px 22px;}}
-@media(min-width:1024px){main{padding:26px 0 130px;}}
-::-webkit-scrollbar{width:4px;}::-webkit-scrollbar-track{background:transparent;}::-webkit-scrollbar-thumb{background:rgba(100,160,255,.18);border-radius:10px;}
+  .progress-label {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.75rem;
+    color: var(--muted);
+    margin-bottom: 0.5rem;
+    font-family: 'DM Mono', monospace;
+  }
+
+  .progress-bar {
+    height: 4px;
+    background: var(--surface);
+    border-radius: 50px;
+    overflow: hidden;
+  }
+
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--util), var(--deont));
+    border-radius: 50px;
+    transition: width 0.5s ease;
+  }
+
+  /* QUESTION CARD */
+  .q-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 2rem;
+    margin-bottom: 1.5rem;
+    position: relative;
+    overflow: hidden;
+    animation: slideUp 0.4s ease;
+  }
+
+  @keyframes slideUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .q-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 4px; height: 100%;
+    border-radius: 20px 0 0 20px;
+  }
+
+  .q-card.type-mc::before { background: var(--util); }
+  .q-card.type-tf::before { background: var(--gold); }
+  .q-card.type-id::before { background: var(--deont); }
+  .q-card.type-classify::before { background: var(--rose); }
+  .q-card.type-scenario::before { background: #a78bfa; }
+
+  .q-type-badge {
+    display: inline-block;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 0.25rem 0.7rem;
+    border-radius: 50px;
+    margin-bottom: 1rem;
+    font-weight: 500;
+  }
+
+  .type-mc .q-type-badge { background: rgba(108,99,255,0.15); color: var(--util-light); border: 1px solid rgba(108,99,255,0.3); }
+  .type-tf .q-type-badge { background: rgba(245,166,35,0.15); color: var(--gold); border: 1px solid rgba(245,166,35,0.3); }
+  .type-id .q-type-badge { background: rgba(0,201,167,0.15); color: var(--deont-light); border: 1px solid rgba(0,201,167,0.3); }
+  .type-classify .q-type-badge { background: rgba(255,107,107,0.15); color: var(--rose); border: 1px solid rgba(255,107,107,0.3); }
+  .type-scenario .q-type-badge { background: rgba(167,139,250,0.15); color: #a78bfa; border: 1px solid rgba(167,139,250,0.3); }
+
+  .q-number {
+    font-family: 'Playfair Display', serif;
+    font-size: 0.85rem;
+    color: var(--muted);
+    margin-bottom: 0.5rem;
+  }
+
+  .q-text {
+    font-size: 1.05rem;
+    line-height: 1.65;
+    font-weight: 500;
+    color: var(--white);
+    margin-bottom: 1.5rem;
+  }
+
+  /* OPTIONS */
+  .options-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+
+  .option-btn {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 0.85rem 1.1rem;
+    text-align: left;
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    line-height: 1.5;
+  }
+
+  .option-btn:hover:not(:disabled) {
+    border-color: var(--util-light);
+    background: rgba(108,99,255,0.1);
+    transform: translateX(3px);
+  }
+
+  .option-btn.selected {
+    border-color: var(--util-light);
+    background: rgba(108,99,255,0.15);
+  }
+
+  .option-btn.correct {
+    border-color: var(--correct);
+    background: rgba(0,201,167,0.15);
+    color: var(--white);
+  }
+
+  .option-btn.wrong {
+    border-color: var(--wrong);
+    background: rgba(255,107,107,0.15);
+  }
+
+  .opt-letter {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 24px; height: 24px;
+    border-radius: 50%;
+    background: var(--border);
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    font-weight: 600;
+    flex-shrink: 0;
+    margin-top: 1px;
+    transition: all 0.2s;
+  }
+
+  .selected .opt-letter { background: var(--util); color: #fff; }
+  .correct .opt-letter { background: var(--correct); color: #fff; }
+  .wrong .opt-letter { background: var(--wrong); color: #fff; }
+
+  /* IDENTIFICATION INPUT */
+  .id-input {
+    width: 100%;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 0.85rem 1.1rem;
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.95rem;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+
+  .id-input:focus { border-color: var(--util-light); }
+  .id-input.correct { border-color: var(--correct); background: rgba(0,201,167,0.08); }
+  .id-input.wrong { border-color: var(--wrong); background: rgba(255,107,107,0.08); }
+
+  /* FEEDBACK */
+  .feedback-box {
+    margin-top: 1rem;
+    padding: 1rem 1.2rem;
+    border-radius: 12px;
+    font-size: 0.9rem;
+    line-height: 1.6;
+    display: none;
+  }
+
+  .feedback-box.show { display: block; animation: fadeIn 0.3s ease; }
+  .feedback-box.correct { background: rgba(0,201,167,0.1); border: 1px solid rgba(0,201,167,0.3); color: var(--deont-light); }
+  .feedback-box.wrong { background: rgba(255,107,107,0.1); border: 1px solid rgba(255,107,107,0.3); color: #ff9a9a; }
+
+  @keyframes fadeIn {
+    from { opacity: 0; } to { opacity: 1; }
+  }
+
+  /* SUBMIT / NEXT BUTTONS */
+  .btn-row {
+    display: flex;
+    gap: 0.75rem;
+    margin-top: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .btn-submit {
+    background: linear-gradient(135deg, var(--util), var(--util-light));
+    color: #fff;
+    border: none;
+    padding: 0.75rem 2rem;
+    border-radius: 50px;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 600;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .btn-submit:hover { transform: translateY(-1px); box-shadow: 0 6px 20px rgba(108,99,255,0.4); }
+  .btn-submit:disabled { opacity: 0.4; cursor: not-allowed; transform: none; }
+
+  .btn-next {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    color: var(--text);
+    padding: 0.75rem 2rem;
+    border-radius: 50px;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 600;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: none;
+  }
+
+  .btn-next.show { display: inline-flex; align-items: center; gap: 0.5rem; }
+  .btn-next:hover { border-color: var(--util-light); background: rgba(108,99,255,0.1); }
+
+  /* RESULTS SCREEN */
+  #results-screen {
+    display: none;
+    position: relative;
+    z-index: 1;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 3rem 1.5rem;
+    text-align: center;
+  }
+
+  .results-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    font-weight: 900;
+    margin-bottom: 0.5rem;
+    background: linear-gradient(135deg, var(--white), var(--util-light));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .score-big {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(4rem, 12vw, 8rem);
+    font-weight: 900;
+    line-height: 1;
+    margin: 1rem 0;
+    background: linear-gradient(135deg, var(--gold), var(--rose));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .score-label { color: var(--muted); font-size: 1rem; margin-bottom: 2rem; }
+
+  .result-breakdown {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    margin: 2rem 0;
+  }
+
+  .rb-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 1.25rem;
+  }
+
+  .rb-card .rb-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem;
+    font-weight: 700;
+    display: block;
+  }
+
+  .rb-card .rb-label { font-size: 0.75rem; color: var(--muted); margin-top: 0.25rem; }
+  .rb-card.correct .rb-num { color: var(--correct); }
+  .rb-card.wrong .rb-num { color: var(--wrong); }
+  .rb-card.skip .rb-num { color: var(--gold); }
+
+  .grade-badge {
+    display: inline-block;
+    font-family: 'Playfair Display', serif;
+    font-size: 1.2rem;
+    font-weight: 700;
+    padding: 0.5rem 2rem;
+    border-radius: 50px;
+    margin-bottom: 1.5rem;
+  }
+
+  .review-list {
+    margin-top: 2rem;
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .review-item {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1rem 1.25rem;
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+
+  .review-icon {
+    width: 24px; height: 24px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.7rem;
+    font-weight: 700;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .review-icon.c { background: var(--correct); color: #fff; }
+  .review-icon.w { background: var(--wrong); color: #fff; }
+
+  .review-q { font-size: 0.85rem; color: var(--muted); margin-bottom: 0.25rem; }
+  .review-a { font-size: 0.9rem; font-weight: 500; color: var(--white); }
+  .review-correct { font-size: 0.8rem; color: var(--deont-light); margin-top: 0.2rem; }
+
+  .btn-retry {
+    background: linear-gradient(135deg, var(--util), var(--deont));
+    color: #fff;
+    border: none;
+    padding: 1rem 3rem;
+    border-radius: 50px;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    margin-top: 2rem;
+    transition: all 0.3s;
+  }
+
+  .btn-retry:hover { transform: translateY(-2px); box-shadow: 0 0 40px rgba(108,99,255,0.5); }
+
+  @media (max-width: 600px) {
+    .result-breakdown { grid-template-columns: 1fr 1fr; }
+    .q-card { padding: 1.25rem; }
+    .quiz-header { flex-direction: column; align-items: flex-start; }
+  }
 </style>
 </head>
 <body>
 
-<div id="stars"></div>
-<div class="neb neb1"></div>
-<div class="neb neb2"></div>
-<div class="toast" id="toast"></div>
-
-<!-- ══════════════════════════════════════════
-     LANDING
-══════════════════════════════════════════ -->
+<!-- LANDING -->
 <div id="landing">
-  <div class="logo">📘</div>
-  <h1><em>Ethics</em><br>Mock Exam</h1>
-  <p class="credit">Created by <span>Nathhhhh</span></p>
-  <p class="subdesc">50 questions · 4 question types · 45-minute timer<br>XP system, streaks, hints, bookmarks &amp; more.</p>
-  <div class="fgrid">
-    <div class="fcard"><div class="fi">🔥</div><div class="fv">XP</div><div class="fl">Streaks</div></div>
-    <div class="fcard"><div class="fi">💡</div><div class="fv">3</div><div class="fl">Hints</div></div>
-    <div class="fcard"><div class="fi">🔖</div><div class="fv">Save</div><div class="fl">Bookmarks</div></div>
-    <div class="fcard"><div class="fi">⏱</div><div class="fv">45m</div><div class="fl">Timer</div></div>
-    <div class="fcard"><div class="fi">🎨</div><div class="fv">5</div><div class="fl">Themes</div></div>
-    <div class="fcard"><div class="fi">⌨️</div><div class="fv">Keys</div><div class="fl">Shortcuts</div></div>
+  <div class="landing-glow"></div>
+  <div class="landing-badge">Philosophy &amp; Ethics • Mock Examination</div>
+  <h1 class="landing-title">Utilitarianism<br>&amp; <span>Deontology</span></h1>
+  <p class="landing-sub">Test your mastery of ethical theory. 30 randomized questions per session drawn from a 150-item question bank covering every concept.</p>
+  <div class="stats-row">
+    <div class="stat-pill util"><span class="num">150</span><span class="label">Total Items</span></div>
+    <div class="stat-pill deont"><span class="num">30</span><span class="label">Per Session</span></div>
+    <div class="stat-pill gold"><span class="num">5</span><span class="label">Question Types</span></div>
   </div>
-  <p style="font-size:11px;color:var(--muted);margin-bottom:9px;letter-spacing:1px;text-transform:uppercase;">Difficulty</p>
-  <div class="diff-row">
-    <div class="dbtn easy on" id="d-easy" onclick="setDiff('easy')">😌 Easy</div>
-    <div class="dbtn medium" id="d-medium" onclick="setDiff('medium')">🤔 Medium</div>
-    <div class="dbtn hard" id="d-hard" onclick="setDiff('hard')">🔥 Hard</div>
-  </div>
-  <div class="togg-list">
-    <div class="togg" onclick="togglePref('music')"><span>🎵</span><span class="togg-label">Background music</span><div class="sw on" id="sw-music"></div></div>
-    <div class="togg" onclick="togglePref('hints')"><span>💡</span><span class="togg-label">Enable hints (3 per exam)</span><div class="sw on" id="sw-hints"></div></div>
-  </div>
-  <div class="theme-wrap">
-    <div class="theme-lbl">🎨 Theme</div>
-    <div class="theme-row">
-      <div class="thbtn th-midnight ton" id="th-midnight" onclick="setTheme('midnight')"><div class="thdot"></div><span class="thlbl">Midnight</span></div>
-      <div class="thbtn th-ocean" id="th-ocean" onclick="setTheme('ocean')"><div class="thdot"></div><span class="thlbl">Ocean</span></div>
-      <div class="thbtn th-forest" id="th-forest" onclick="setTheme('forest')"><div class="thdot"></div><span class="thlbl">Forest</span></div>
-      <div class="thbtn th-sunset" id="th-sunset" onclick="setTheme('sunset')"><div class="thdot"></div><span class="thlbl">Sunset</span></div>
-      <div class="thbtn th-light" id="th-light" onclick="setTheme('light')"><div class="thdot"></div><span class="thlbl">Light</span></div>
+  <button class="btn-start" onclick="startQuiz()">Begin Exam →</button>
+</div>
+
+<!-- QUIZ -->
+<div id="quiz-screen">
+  <div class="quiz-header">
+    <div class="quiz-logo">Ethics Exam</div>
+    <div class="quiz-meta">
+      <div class="q-counter" id="q-counter">Question 1 of 30</div>
+      <div class="score-live" id="score-live">Score: 0</div>
     </div>
   </div>
-  <button class="start-btn" onclick="startQuiz()">Launch Exam →</button>
-</div>
-
-<!-- ══════════════════════════════════════════
-     QUIZ
-══════════════════════════════════════════ -->
-<div id="qscreen">
-  <div class="qhdr">
-    <div class="qhdr-row1">
-      <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
-        <span class="qhtitle">Ethics Exam</span>
-        <div class="timerwrap"><span>⏱</span><span class="timerval" id="timerval">45:00</span></div>
-        <div class="streak-chip" id="streakchip">🔥 <span id="streaknum">0</span></div>
-      </div>
-      <div style="display:flex;align-items:center;gap:7px;flex-wrap:wrap;">
-        <div class="xpwrap"><span class="xplabel">XP <b id="xpval">0</b></span><div class="xptrack"><div class="xpfill" id="xpfill"></div></div></div>
-        <div class="ibtn" id="musicbtn" onclick="toggleMusic()" title="Toggle Music">🎵</div>
-        <div class="ibtn" onclick="toggleTheme()" title="Toggle Theme">🌙</div>
-        <div class="ibtn" onclick="openRev()" title="Bookmarks">🔖</div>
-      </div>
+  <div class="progress-wrap">
+    <div class="progress-label">
+      <span id="prog-label">Progress</span>
+      <span id="prog-pct">0%</span>
     </div>
-    <div class="qhdr-row2">
-      <div class="sc">Done <b class="a" id="s-done">0</b>/50</div>
-      <div class="sc">✓ <b class="c" id="s-cor">0</b></div>
-      <div class="sc">✗ <b class="w" id="s-wrg">0</b></div>
-      <div class="sc">💡 <b class="h" id="s-hints">3</b> left</div>
-    </div>
-    <div class="ptrack"><div class="pfill" id="pfill"></div></div>
+    <div class="progress-bar"><div class="progress-fill" id="progress-fill" style="width:0%"></div></div>
   </div>
-
-  <main id="qmain"></main>
-
-  <div class="subbar">
-    <div class="subbar-inner">
-      <span>Answered <b id="bar-done">0</b> of 50</span>
-      <button class="subbtn" id="subbtn" onclick="submitQuiz()" disabled>Submit Exam</button>
-    </div>
+  <div id="q-container"></div>
+  <div class="btn-row">
+    <button class="btn-submit" id="btn-submit" onclick="submitAnswer()">Submit Answer</button>
+    <button class="btn-next show" id="btn-next" onclick="nextQuestion()" style="display:none">Next Question →</button>
   </div>
 </div>
 
-<!-- Navigator -->
-<div class="qnav" id="qnav"></div>
-
-<!-- Keyboard hints -->
-<div class="keyhint">
-  <kbd>A</kbd>–<kbd>D</kbd> Pick option<br>
-  <kbd>T</kbd>/<kbd>F</kbd> True/False<br>
-  <kbd>H</kbd> Use hint<br>
-  <kbd>B</kbd> Bookmark<br>
-  <kbd>↑</kbd><kbd>↓</kbd> Scroll<br>
-  <kbd>Esc</kbd> Close panel
-</div>
-
-<!-- Bookmark review panel -->
-<div id="revpanel">
-  <div class="revinner">
-    <div class="revtitle">🔖 Bookmarks <button class="revclosebtn" onclick="closeRev()">✕ Close</button></div>
-    <div id="revlist"></div>
+<!-- RESULTS -->
+<div id="results-screen">
+  <div class="results-title">Session Complete!</div>
+  <div class="score-big" id="final-score">0/30</div>
+  <div class="score-label" id="score-pct-label"></div>
+  <div class="grade-badge" id="grade-badge"></div>
+  <div class="result-breakdown">
+    <div class="rb-card correct"><span class="rb-num" id="rb-correct">0</span><div class="rb-label">✓ Correct</div></div>
+    <div class="rb-card wrong"><span class="rb-num" id="rb-wrong">0</span><div class="rb-label">✗ Incorrect</div></div>
+    <div class="rb-card skip"><span class="rb-num" id="rb-skip">0</span><div class="rb-label">— Skipped</div></div>
   </div>
-</div>
-
-<!-- Time up -->
-<div id="timeup">
-  <div style="font-size:58px;margin-bottom:14px;">⏰</div>
-  <h2>Time's Up!</h2>
-  <p>Your 45 minutes are up. Answers auto-submitted.</p>
-  <button class="btnprimary" onclick="showResults()">View Results →</button>
-</div>
-
-<!-- Results -->
-<div id="results">
-  <div class="ringwrap">
-    <svg class="ringsvg" viewBox="0 0 120 120">
-      <circle cx="60" cy="60" r="52" fill="none" stroke="rgba(100,160,255,0.1)" stroke-width="8"/>
-      <circle id="ringcircle" cx="60" cy="60" r="52" fill="none" stroke="url(#rg)" stroke-width="8"
-        stroke-linecap="round" stroke-dasharray="326.73" stroke-dashoffset="326.73"
-        transform="rotate(-90 60 60)" style="transition:stroke-dashoffset 1.2s cubic-bezier(.4,0,.2,1)"/>
-      <defs><linearGradient id="rg" x1="0%" y1="0%" x2="100%" y2="0%">
-        <stop offset="0%" stop-color="#1a6bff"/><stop offset="100%" stop-color="#38d9f5"/>
-      </linearGradient></defs>
-    </svg>
-    <div class="ringinner"><div class="ringpct" id="res-pct">0%</div><div class="ringlbl">Score</div></div>
-  </div>
-  <div class="gbadge" id="res-grade"></div>
-  <h2 id="res-head"></h2>
-  <p id="res-sub"></p>
-  <div class="resgrid">
-    <div class="rcard sc"><div class="rv" id="r-score">0%</div><div class="rl">Score</div></div>
-    <div class="rcard co"><div class="rv" id="r-cor">0</div><div class="rl">Correct</div></div>
-    <div class="rcard wr"><div class="rv" id="r-wrg">0</div><div class="rl">Wrong</div></div>
-    <div class="rcard xp"><div class="rv" id="r-xp">0</div><div class="rl">XP Earned</div></div>
-    <div class="rcard st"><div class="rv" id="r-str">0🔥</div><div class="rl">Best Streak</div></div>
-    <div class="rcard"><div class="rv" id="r-time" style="color:var(--blue3)">--</div><div class="rl">Time Used</div></div>
-  </div>
-  <div class="bdtitle">By Question Type</div>
-  <div class="bdgrid">
-    <div class="bdcard"><div class="bdt">Multiple Choice</div><div class="bds" id="bd-mcq">0/0</div></div>
-    <div class="bdcard"><div class="bdt">True / False</div><div class="bds" id="bd-tf">0/0</div></div>
-    <div class="bdcard"><div class="bdt">Identification</div><div class="bds" id="bd-id">0/0</div></div>
-    <div class="bdcard"><div class="bdt">Fill in Blank</div><div class="bds" id="bd-fib">0/0</div></div>
-  </div>
-  <div class="actbtns">
-    <button class="btnprimary" onclick="restartQuiz()">Retake Exam</button>
-    <button class="btnghost" onclick="reviewMode()">Review Answers</button>
-  </div>
+  <button class="btn-retry" onclick="startQuiz()">Try Another Session →</button>
+  <div class="review-list" id="review-list"></div>
 </div>
 
 <script>
-/* ═══════════════════════════════
-   QUESTIONS
-═══════════════════════════════ */
-var Q=[
-  // ── MCQ 20 ──
-  {t:'mcq',s:'Multiple Choice',d:'easy',q:"What do the Greek words 'Philo' and 'Sophia' mean?",o:["Power and Truth","Love and Wisdom","Reason and Justice","Mind and Science"],a:1,ex:"'Philo' = love, 'Sophia' = wisdom — together meaning love of wisdom.",h:"Think of the literal translation of the word 'philosophy.'"},
-  {t:'mcq',s:'Multiple Choice',d:'easy',q:"Which branch of philosophy studies reality and existence?",o:["Epistemology","Logic","Aesthetics","Metaphysics"],a:3,ex:"Metaphysics is the study of reality and existence.",h:"The prefix 'meta' means beyond — beyond the physical world."},
-  {t:'mcq',s:'Multiple Choice',d:'easy',q:"Which branch of philosophy focuses on the study of knowledge?",o:["Ethics","Epistemology","Metaphysics","Logic"],a:1,ex:"Epistemology is the philosophical study of knowledge.",h:"The Greek 'episteme' means knowledge."},
-  {t:'mcq',s:'Multiple Choice',d:'easy',q:"Ethics as a branch of philosophy studies:",o:["The nature of reality","Mathematical logic","Art appreciation","Morality and right conduct"],a:3,ex:"Ethics is the study of morality and right conduct.",h:"Ethics deals with what is right and wrong in human action."},
-  {t:'mcq',s:'Multiple Choice',d:'medium',q:"How does Ethics primarily differ from Morals?",o:["Ethics is religious; Morals are scientific","Ethics is based on reason; Morals are personal beliefs influenced by culture","Ethics is cultural; Morals are legal","They are identical"],a:1,ex:"Ethics is grounded in reason; morals stem from personal, cultural, and religious beliefs.",h:"One is more systematic and academic; the other is more personal."},
-  {t:'mcq',s:'Multiple Choice',d:'easy',q:"Descriptive Ethics is characterized by:",o:["Prescribing what people should do","Describing actual moral behavior without judging","Creating laws","Studying divine commands"],a:1,ex:"Descriptive Ethics observes actual moral behavior without judgment.",h:"'Descriptive' means to describe, not to judge or prescribe."},
-  {t:'mcq',s:'Multiple Choice',d:'medium',q:"Which type of ethics studies what people SHOULD do morally?",o:["Descriptive Ethics","Meta-Ethics","Normative Ethics","Applied Ethics"],a:2,ex:"Normative Ethics is prescriptive — it says what people ought to do.",h:"'Norm' relates to standards or rules of behavior."},
-  {t:'mcq',s:'Multiple Choice',d:'medium',q:"The 'physical object' in Ethics refers to:",o:["The action itself","The environment","The doer of the act","The consequences"],a:2,ex:"The physical object is the person who performs the act.",h:"Think about who is actually doing the action."},
-  {t:'mcq',s:'Multiple Choice',d:'medium',q:"'Human Acts' in Ethics are those done with:",o:["Instinct only","Social pressure","Knowledge and freedom","Legal permission"],a:2,ex:"Human Acts require knowledge and freedom, giving them moral value.",h:"Two essential ingredients make an act truly 'human.'"},
-  {t:'mcq',s:'Multiple Choice',d:'medium',q:"The 'means' component of a moral act refers to:",o:["The goal","The motive","The method used","The doer"],a:2,ex:"The means is the method or way in which an act is performed.",h:"How you do something — that's the means."},
-  {t:'mcq',s:'Multiple Choice',d:'medium',q:"Subjectivism holds that moral judgments depend on:",o:["Divine law","Government rules","Personal feelings or opinions","Universal principles"],a:2,ex:"Subjectivism says morality is based on personal feelings or opinions.",h:"The key word is 'subject' — the individual person and their feelings."},
-  {t:'mcq',s:'Multiple Choice',d:'hard',q:"Psychological Egoism claims that people:",o:["Should always act selfishly","Naturally act in self-interest","Must follow social contracts","Are guided purely by empathy"],a:1,ex:"Psychological Egoism is descriptive: people naturally tend toward self-interest.",h:"Psychological theories describe how people actually behave."},
-  {t:'mcq',s:'Multiple Choice',d:'medium',q:"Which philosopher developed Virtue Ethics?",o:["Plato","Socrates","Aristotle","Kant"],a:2,ex:"Aristotle is the founder of Virtue Ethics, emphasizing good character.",h:"This Greek philosopher was Plato's most famous student."},
-  {t:'mcq',s:'Multiple Choice',d:'easy',q:"Jeremy Bentham is the founder of:",o:["Virtue Ethics","Utilitarianism","Existentialism","Natural Law"],a:1,ex:"Bentham founded Utilitarianism — greatest happiness for the greatest number.",h:"'Utility' means usefulness or benefit."},
-  {t:'mcq',s:'Multiple Choice',d:'medium',q:"Immanuel Kant's ethics is primarily based on:",o:["Greatest happiness","Duty","Virtue","Divine commands"],a:1,ex:"Kant's Deontological ethics centers on duty and the categorical imperative.",h:"Kant's ethics is often called 'duty ethics' or Deontology."},
-  {t:'mcq',s:'Multiple Choice',d:'hard',q:"Carol Gilligan is associated with:",o:["Justice as Fairness","Rule Utilitarianism","Ethics of Care","Natural Law Ethics"],a:2,ex:"Carol Gilligan developed the Ethics of Care, emphasizing relationships and empathy.",h:"This feminist philosopher emphasized caring relationships over abstract rules."},
-  {t:'mcq',s:'Multiple Choice',d:'hard',q:"John Rawls' theory is known as:",o:["Ethics of Care","Existentialism","Virtue Ethics","Justice as Fairness"],a:3,ex:"John Rawls proposed 'Justice as Fairness,' using the veil of ignorance thought experiment.",h:"Rawls imagined designing society without knowing your place in it."},
-  {t:'mcq',s:'Multiple Choice',d:'easy',q:"Which source of authority consists of rules enforced by government?",o:["Religion","Culture","Law","Science"],a:2,ex:"Law refers to formal rules established and enforced by government authority.",h:"The government enforces this source of moral authority."},
-  {t:'mcq',s:'Multiple Choice',d:'medium',q:"The main criticism of Subjectivism is that it:",o:["Is too strict","Relies too much on religion","Lacks an objective standard for right or wrong","Ignores cultural norms"],a:2,ex:"Without objective standards, Subjectivism cannot resolve moral disagreements.",h:"If everything is personal, how do we settle moral disagreements?"},
-  {t:'mcq',s:'Multiple Choice',d:'hard',q:"Jean-Paul Sartre's ethical approach is called:",o:["Virtue Ethics","Natural Law","Utilitarianism","Existential Ethics"],a:3,ex:"Sartre's Existential Ethics emphasizes radical freedom and full responsibility for choices.",h:"Sartre said 'existence precedes essence' — we define ourselves through choices."},
+// ============================================================
+// 150-ITEM QUESTION BANK
+// Types: mc, tf, id, classify (util/deont), scenario
+// ============================================================
+const BANK = [
+  // ── MULTIPLE CHOICE ──────────────────────────────────────
+  {id:1,type:'mc',text:'Which branch of ethics asks "What should we do?" and develops standards for right action?',options:['Meta-Ethics','Applied Ethics','Normative Ethics','Descriptive Ethics'],answer:2,explanation:'Normative Ethics develops standards for right action and asks "What should we do?"'},
+  {id:2,type:'mc',text:'What is the core principle of Utilitarianism?',options:['Act according to duty regardless of outcome','Greatest happiness for the greatest number','Follow universal moral laws','Treat all persons as ends in themselves'],answer:1,explanation:'Utilitarianism holds that the right action produces the greatest happiness for the greatest number.'},
+  {id:3,type:'mc',text:'Jeremy Bentham lived from:',options:['1706–1790','1724–1804','1748–1832','1806–1873'],answer:2,explanation:'Jeremy Bentham (1748–1832) was the founder of classical utilitarianism.'},
+  {id:4,type:'mc',text:'What did Bentham call his method of measuring pleasure and pain?',options:['Moral Calculus','Felicific Calculus','Utility Index','Hedonic Scale'],answer:1,explanation:'Bentham\'s "Felicific Calculus" (also called the Hedonic Calculus) scored pleasure and pain mathematically.'},
+  {id:5,type:'mc',text:'How many dimensions does Bentham\'s Hedonic Calculus have?',options:['5','6','7','8'],answer:2,explanation:'The Hedonic Calculus has 7 dimensions: Intensity, Duration, Certainty, Propinquity, Fecundity, Purity, and Extent.'},
+  {id:6,type:'mc',text:'Which dimension of the Hedonic Calculus asks "How many people does it affect?"',options:['Fecundity','Purity','Propinquity','Extent'],answer:3,explanation:'Extent asks how many people are affected by the pleasure or pain.'},
+  {id:7,type:'mc',text:'Which dimension of the Hedonic Calculus measures how soon the pleasure will occur?',options:['Duration','Certainty','Propinquity','Intensity'],answer:2,explanation:'Propinquity refers to nearness in time — how soon the pleasure or pain will occur.'},
+  {id:8,type:'mc',text:'Which dimension asks "Will it produce more pleasure?"',options:['Purity','Fecundity','Extent','Certainty'],answer:1,explanation:'Fecundity asks whether the pleasure will produce more pleasure in the future.'},
+  {id:9,type:'mc',text:'John Stuart Mill was born in:',options:['1748','1785','1806','1781'],answer:2,explanation:'John Stuart Mill was born in 1806 and died in 1873.'},
+  {id:10,type:'mc',text:'What was Mill\'s key departure from Bentham\'s view of pleasure?',options:['Mill rejected the idea of utility','Mill believed only physical pleasures count','Mill distinguished higher and lower pleasures','Mill said society should not limit individual freedom'],answer:2,explanation:'Mill distinguished higher pleasures (intellectual, moral, social) from lower pleasures (physical, bodily), arguing they are not equal.'},
+  {id:11,type:'mc',text:'According to Mill, which of the following is a "higher pleasure"?',options:['Food and comfort','Immediate sensations','Reading and philosophy','Entertainment and indulgence'],answer:2,explanation:'Reading and philosophy are intellectual pleasures, which Mill classified as higher pleasures.'},
+  {id:12,type:'mc',text:'Mill\'s famous quote is: "It is better to be _______ dissatisfied than a fool satisfied."',options:['Plato','Bentham','Kant','Socrates'],answer:3,explanation:'Mill\'s famous line is "It is better to be Socrates dissatisfied than a fool satisfied."'},
+  {id:13,type:'mc',text:'Rule Utilitarianism, associated with Mill, means:',options:['Judge every act by calculating utility','Follow rules that generally produce the best outcomes','Act according to the Categorical Imperative','Maximize personal happiness only'],answer:1,explanation:'Rule Utilitarianism means following rules that produce the best outcomes when generally observed, rather than calculating utility for each act.'},
+  {id:14,type:'mc',text:'Act Utilitarianism is primarily associated with:',options:['Immanuel Kant','John Stuart Mill','Jeremy Bentham','Aristotle'],answer:2,explanation:'Act Utilitarianism is associated with Jeremy Bentham — each individual act is judged by calculating total utility.'},
+  {id:15,type:'mc',text:'Which is a known weakness of Act Utilitarianism?',options:['It is too rigid and inflexible','It can justify terrible acts if they maximize utility','It ignores social welfare','It is too focused on individual rights'],answer:1,explanation:'Act Utilitarianism can justify terrible or unjust acts as long as they maximize overall utility — a major criticism.'},
+  {id:16,type:'mc',text:'Immanuel Kant was born in:',options:['1724','1748','1781','1806'],answer:0,explanation:'Immanuel Kant was born on April 22, 1724, in Königsberg, East Prussia.'},
+  {id:17,type:'mc',text:'Kant\'s ethics are classified as:',options:['Consequentialist','Virtue Ethics','Deontological','Pragmatic'],answer:2,explanation:'Kant\'s ethics are deontological — duty-based, where morality comes from following rules, not outcomes.'},
+  {id:18,type:'mc',text:'What does Kant call the unconditionally good thing — the only true moral foundation?',options:['The Greatest Good','The Categorical Imperative','The Good Will','The Kingdom of Ends'],answer:2,explanation:'For Kant, only a Good Will — acting purely from duty — is unconditionally good.'},
+  {id:19,type:'mc',text:'The Categorical Imperative is best described as:',options:['A conditional moral rule based on desired outcomes','A supreme moral principle all rational agents must follow','A calculation of pleasure and pain','A guide only for legislators'],answer:1,explanation:'The Categorical Imperative is an absolute, universal, rational supreme moral principle all rational agents must follow.'},
+  {id:20,type:'mc',text:'How many formulations does the Categorical Imperative have?',options:['2','3','4','5'],answer:1,explanation:'The Categorical Imperative has 3 formulations: Universal Law, Formula of Humanity, and Kingdom of Ends.'},
+  {id:21,type:'mc',text:'The Formula of Universal Law asks:',options:['Does this action respect human dignity?','Can I universalize my maxim without contradiction?','Does this maximize utility for all?','Does this fulfill my duty to self?'],answer:1,explanation:'The Formula of Universal Law asks: "Can I will that EVERYONE act this way?" — if universalizing creates a contradiction, the action is immoral.'},
+  {id:22,type:'mc',text:'The Formula of Humanity states that we must:',options:['Act to maximize happiness','Always treat humanity as an end, never merely as a means','Follow rules that benefit the majority','Develop our talents for society'],answer:1,explanation:'The Formula of Humanity requires treating humanity — in yourself and others — always as an end and never merely as a means.'},
+  {id:23,type:'mc',text:'The Kingdom of Ends is Kant\'s vision of:',options:['A utilitarian society maximizing happiness','An ideal moral community of rational beings treating each other as ends','A government based on utility','A world without moral laws'],answer:1,explanation:'The Kingdom of Ends imagines an ideal community where every rational agent treats others as ends and collectively legislates moral law.'},
+  {id:24,type:'mc',text:'Perfect duties in Kant\'s ethics are:',options:['Broad obligations with discretion in how to fulfill them','Absolute duties with no exceptions regardless of consequences','Context-sensitive moral guidelines','Duties that can be outweighed by utility'],answer:1,explanation:'Perfect duties are strict, absolute obligations — no exceptions — such as "do not lie" and "do not commit suicide."'},
+  {id:25,type:'mc',text:'Which is an example of a Kantian perfect duty toward others?',options:['Help those in need','Develop your talents','Do not make false promises','Pursue intellectual pleasures'],answer:2,explanation:'Do not make false promises is a perfect duty toward others — universalizing lying would destroy trust and contradict itself.'},
+  {id:26,type:'mc',text:'Which is an example of an imperfect duty toward self?',options:['Do not commit suicide','Do not lie','Develop your talents','Help those in need'],answer:2,explanation:'Developing your talents is an imperfect duty toward self — you must do it, but have discretion in which talents to develop.'},
+  {id:27,type:'mc',text:'In the Trolley Problem, what would a Utilitarian recommend?',options:['Do nothing — pulling the lever violates duty','Pull the lever — 5 lives outweigh 1','Refuse to engage with the dilemma','Consult the Formula of Humanity first'],answer:1,explanation:'Utilitarians would pull the lever because saving 5 lives maximizes utility compared to 1 life lost (5 > 1).'},
+  {id:28,type:'mc',text:'A key critique of Deontology is:',options:['It promotes social welfare too aggressively','It is too rigid and ignores real-world consequences','It is too focused on outcomes','It cannot handle individual rights'],answer:1,explanation:'Deontology is criticized for being too rigid — Kant said you must not lie even to a murderer asking where your friend is hiding.'},
+  {id:29,type:'mc',text:'A key strength of Utilitarianism is:',options:['It provides absolute moral rules with no exceptions','It protects human dignity unconditionally','It promotes social welfare and guides practical policy','It is independent of outcomes'],answer:2,explanation:'Utilitarianism promotes social welfare and is highly practical — it underpins cost-benefit analysis in policy and public health.'},
+  {id:30,type:'mc',text:'Both Utilitarianism and Deontology agree that:',options:['Consequences are the only measure of morality','Morality is universal and rational','Individual rights can be sacrificed for the majority','Pleasure is the only intrinsic good'],answer:1,explanation:'Both theories agree that morality is universal and rational, and that every person has moral standing.'},
+  {id:31,type:'mc',text:'Normative Ethics as a category asks:',options:['What does "good" mean?','What should we do?','How should we apply ethics to AI?','Why do humans act morally?'],answer:1,explanation:'Normative Ethics asks "What should we do?" and develops standards for right action.'},
+  {id:32,type:'mc',text:'Meta-Ethics examines:',options:['How to apply ethics to medicine','The nature of moral claims and what "good" means','What actions governments should take','Standards for right action in normative contexts'],answer:1,explanation:'Meta-Ethics examines the nature of moral claims and asks "What does \'good\' mean?"'},
+  {id:33,type:'mc',text:'Applied Ethics includes which of the following fields?',options:['Epistemology','Metaphysics','AI, medicine, and business ethics','Linguistic philosophy'],answer:2,explanation:'Applied Ethics applies moral principles to real situations such as medicine, law, AI, and business.'},
+  {id:34,type:'mc',text:'According to Bentham, which of the following is TRUE about pleasures?',options:['Intellectual pleasures are superior to physical ones','All pleasures are equal regardless of type','Higher pleasures should outweigh lower ones','Only social pleasures have moral worth'],answer:1,explanation:'For Bentham, all pleasures are equal — eating a good meal counts just as much as reading a great book if the feeling is the same.'},
+  {id:35,type:'mc',text:'The Panopticon designed by Bentham was:',options:['A democratic parliament building','A circular prison where guards could observe all inmates simultaneously','A utilitarian laboratory for ethics experiments','A philosophy lecture hall at UCL'],answer:1,explanation:'The Panopticon was a circular prison Bentham designed where guards could observe all inmates simultaneously — a practical utility device.'},
+  {id:36,type:'mc',text:'What did Bentham request be done with his body after death?',options:['Buried at UCL campus','Cremated and ashes scattered','Preserved and displayed as an "auto-icon" at UCL','Donated to medical science'],answer:2,explanation:'Bentham requested his preserved body (auto-icon) be displayed at University College London — a utilitarian statement about death and usefulness.'},
+  {id:37,type:'mc',text:'Which of these is classified as a "lower pleasure" according to Mill?',options:['Reading philosophy','Social friendships','Bodily immediate sensations','Pursuing moral virtue'],answer:2,explanation:'Bodily immediate sensations are classified as lower pleasures by Mill — physical and sensory pleasures are lower than intellectual or moral ones.'},
+  {id:38,type:'mc',text:'The "competent judge test" was Mill\'s standard for:',options:['Measuring pain numerically','Determining which pleasures are higher through experienced preference','Calculating utility across populations','Testing whether a maxim can be universalized'],answer:1,explanation:'Mill\'s competent judge test determines which pleasures are higher — a person who has experienced both types will prefer the higher ones.'},
+  {id:39,type:'mc',text:'Which statement about Utilitarianism\'s view of impartiality is correct?',options:['The ruler\'s happiness counts more than citizens\'','No individual\'s pleasure is privileged over another\'s','The majority\'s happiness overrides minority rights always','Only those affected directly count in utility calculations'],answer:1,explanation:'Utilitarianism demands impartiality — every person\'s happiness counts equally, with no special treatment for any individual.'},
+  {id:40,type:'mc',text:'In Kant\'s universalizability test, the step of imagining EVERYONE acting on your maxim is called:',options:['Applying the maxim','Formulating the maxim','Universalizing the maxim','Testing for contradiction'],answer:2,explanation:'Step 2 of the universalizability test is universalizing the maxim — imagining EVERYONE acting on the same principle.'},
+  {id:41,type:'mc',text:'According to Kant, slavery is wrong because:',options:['It reduces total utility','It treats humans purely as instruments, violating the Formula of Humanity','It cannot produce consistent good consequences','It violates the competent judge test'],answer:1,explanation:'Kant opposes slavery because it treats humans purely as instruments — a direct violation of the Formula of Humanity.'},
+  {id:42,type:'mc',text:'In Kantian ethics, the morality of an action depends on:',options:['Its consequences and outcomes','The pleasure it produces','The intention and duty behind the action','The number of people it benefits'],answer:2,explanation:'Deontology judges morality by intention and motive — acting from duty — not by outcomes.'},
+  {id:43,type:'mc',text:'Which weakness of Deontology relates to the inability to resolve conflicts between duties?',options:['Rigidity Problem','Measurement Problem','Conflicting Duties Problem','Demandingness Problem'],answer:2,explanation:'The Conflicting Duties Problem: when two perfect duties clash (e.g., don\'t lie AND save a life), Kant offers no clear resolution.'},
+  {id:44,type:'mc',text:'In modern bioethics, triage based on who benefits most reflects:',options:['Kantian deontology','Virtue ethics','Utilitarian thinking','Rule Utilitarianism only'],answer:2,explanation:'Triage allocating resources to those who benefit most (e.g., ventilators in a pandemic) reflects utilitarian thinking.'},
+  {id:45,type:'mc',text:'Kant believed that punishment must be:',options:['Justified by deterrence and social benefit','Based purely on utility calculations','Deserved (retributive), not merely instrumental','Proportionate to the pleasure of the majority'],answer:2,explanation:'For Kant, punishment must be deserved (retributive) — punishing innocents for deterrence would violate their dignity.'},
+  {id:46,type:'mc',text:'Which of the following best describes Deontology\'s treatment of consequences?',options:['Consequences are the primary basis of morality','Consequences are central to evaluating duty','Consequences are largely irrelevant to determining moral duty','Consequences determine which duties apply'],answer:2,explanation:'In Deontology, consequences are largely irrelevant — moral worth comes from acting from duty, not from outcomes.'},
+  {id:47,type:'mc',text:'Which thinker developed the Categorical Imperative?',options:['Jeremy Bentham','John Stuart Mill','David Hume','Immanuel Kant'],answer:3,explanation:'Immanuel Kant developed the Categorical Imperative as the supreme principle of deontological ethics.'},
+  {id:48,type:'mc',text:'Bentham\'s Principle of Utility states that:',options:['Actions are right insofar as they promote happiness','The moral worth of an act depends on duty','Persons must never be used as means','Higher pleasures outweigh lower ones'],answer:0,explanation:'Bentham\'s Principle of Utility: actions are right insofar as they promote happiness (pleasure) and wrong insofar as they produce pain.'},
+  {id:49,type:'mc',text:'Kant was born in which city?',options:['Berlin','Vienna','Königsberg','Frankfurt'],answer:2,explanation:'Kant was born in Königsberg, East Prussia (now Kaliningrad, Russia).'},
+  {id:50,type:'mc',text:'Mill published his work "Utilitarianism" in:',options:['1748','1785','1832','1863'],answer:3,explanation:'Mill published "Utilitarianism" in 1863.'},
 
-  // ── T/F 12 ──
-  {t:'tf',s:'True or False',d:'easy',q:"Philosophy comes from Greek words meaning 'love of wisdom.'",a:true,ex:"Correct — 'Philo' (love) + 'Sophia' (wisdom) = love of wisdom.",h:"Think about the literal meaning of each Greek root word."},
-  {t:'tf',s:'True or False',d:'easy',q:"Logic is the branch of philosophy that studies beauty and art.",a:false,ex:"False — Aesthetics studies beauty and art. Logic studies correct reasoning.",h:"Which branch name sounds like 'aesthetic'?"},
-  {t:'tf',s:'True or False',d:'easy',q:"Ethics and Morals mean exactly the same thing.",a:false,ex:"False — Ethics is reason-based; Morals are personal beliefs from culture and religion.",h:"They are related but one is more systematic and academic."},
-  {t:'tf',s:'True or False',d:'easy',q:"Human Acts are actions performed with knowledge and freedom.",a:true,ex:"True — Human Acts require knowledge and free will to have moral value.",h:"Two key ingredients make an act truly 'human.'"},
-  {t:'tf',s:'True or False',d:'medium',q:"Acts of Man, like breathing, have full moral value.",a:false,ex:"False — Acts of Man are involuntary and carry no moral value.",h:"Can you truly choose to breathe or blink?"},
-  {t:'tf',s:'True or False',d:'easy',q:"Ethics assumes man is a rational and free being.",a:true,ex:"True — Ethics is built on the assumption that humans are rational and free.",h:"Without freedom, there is no moral responsibility."},
-  {t:'tf',s:'True or False',d:'hard',q:"Ethical Egoism is a descriptive theory about how people naturally behave.",a:false,ex:"False — Psychological Egoism describes behavior. Ethical Egoism prescribes what people ought to do.",h:"One describes; the other prescribes."},
-  {t:'tf',s:'True or False',d:'easy',q:"Aristotle is the philosopher associated with Virtue Ethics.",a:true,ex:"True — Aristotle developed Virtue Ethics, focused on good character and eudaimonia.",h:"This Greek philosopher emphasized character over rules or consequences."},
-  {t:'tf',s:'True or False',d:'medium',q:"Simply following the law makes one fully ethical.",a:false,ex:"False — Ethics is not the same as law; they can significantly diverge.",h:"Laws can be unethical, and ethics can demand more than law requires."},
-  {t:'tf',s:'True or False',d:'easy',q:"Thomas Aquinas developed Natural Law Ethics.",a:true,ex:"True — Aquinas grounded morality in natural law and divine reason.",h:"This medieval philosopher combined Catholic faith and Aristotelian reason."},
-  {t:'tf',s:'True or False',d:'medium',q:"Normative Ethics describes how people actually behave morally.",a:false,ex:"False — Descriptive Ethics describes behavior. Normative Ethics prescribes it.",h:"'Normative' relates to norms or standards of conduct."},
-  {t:'tf',s:'True or False',d:'easy',q:"Religion is one of the recognized sources of authority in Ethics.",a:true,ex:"True — Religion provides moral guidance through sacred texts and traditions.",h:"Sacred texts and traditions are moral guides in many cultures."},
+  // ── TRUE OR FALSE ─────────────────────────────────────────
+  {id:51,type:'tf',text:'Jeremy Bentham believed that all pleasures are qualitatively equal — only their quantity matters.',options:['True','False'],answer:0,explanation:'TRUE. Bentham held that all pleasures are equal in quality; what matters is their quantity (intensity, duration, etc.).'},
+  {id:52,type:'tf',text:'John Stuart Mill argued that intellectual pleasures are superior to physical pleasures.',options:['True','False'],answer:0,explanation:'TRUE. Mill distinguished higher pleasures (intellectual, moral) from lower (bodily) pleasures, calling the former superior.'},
+  {id:53,type:'tf',text:'Deontology judges the morality of an action primarily based on its consequences.',options:['True','False'],answer:1,explanation:'FALSE. Deontology judges morality by duty and intention, NOT by consequences.'},
+  {id:54,type:'tf',text:'The Categorical Imperative is a conditional moral rule that depends on desired outcomes.',options:['True','False'],answer:1,explanation:'FALSE. The Categorical Imperative is UNCONDITIONAL — it applies regardless of outcomes or desires.'},
+  {id:55,type:'tf',text:'Utilitarianism is a form of consequentialist ethics.',options:['True','False'],answer:0,explanation:'TRUE. Utilitarianism is consequentialist — an action\'s moral worth is determined solely by its consequences.'},
+  {id:56,type:'tf',text:'Perfect duties in Kant\'s ethics allow for exceptions based on circumstances.',options:['True','False'],answer:1,explanation:'FALSE. Perfect duties are absolute — they admit no exceptions regardless of consequences.'},
+  {id:57,type:'tf',text:'Imperfect duties, according to Kant, must be fulfilled, but you choose when and how.',options:['True','False'],answer:0,explanation:'TRUE. Imperfect duties are broad obligations — you must fulfill them (e.g., help others, develop talents), but you have discretion in how and when.'},
+  {id:58,type:'tf',text:'Bentham campaigned for rehabilitation rather than retribution in criminal punishment.',options:['True','False'],answer:0,explanation:'TRUE. Bentham campaigned to replace brutal punishments with proportionate ones, advocating rehabilitation over retribution.'},
+  {id:59,type:'tf',text:'According to the Formula of Humanity, it is acceptable to use a person as a means if it saves many lives.',options:['True','False'],answer:1,explanation:'FALSE. The Formula of Humanity forbids using a person MERELY as a means — even to save others — without exception.'},
+  {id:60,type:'tf',text:'Both Utilitarianism and Deontology agree that every person has moral standing.',options:['True','False'],answer:0,explanation:'TRUE. Both theories insist that every person has moral standing, though they differ on what this means in practice.'},
+  {id:61,type:'tf',text:'Rule Utilitarianism judges each individual action separately by calculating its utility.',options:['True','False'],answer:1,explanation:'FALSE. That describes Act Utilitarianism. Rule Utilitarianism follows rules that generally produce the best outcomes.'},
+  {id:62,type:'tf',text:'Kant believed that the Good Will is the only unconditionally good thing.',options:['True','False'],answer:0,explanation:'TRUE. For Kant, a Good Will — acting purely from duty — is the only thing unconditionally good.'},
+  {id:63,type:'tf',text:'The Hedonic Calculus has five dimensions.',options:['True','False'],answer:1,explanation:'FALSE. The Hedonic Calculus has SEVEN dimensions: Intensity, Duration, Certainty, Propinquity, Fecundity, Purity, and Extent.'},
+  {id:64,type:'tf',text:'Utilitarianism requires that the decision-maker\'s own happiness be given extra weight.',options:['True','False'],answer:1,explanation:'FALSE. Utilitarianism demands impartiality — every person\'s happiness counts equally, including the decision-maker\'s.'},
+  {id:65,type:'tf',text:'A weakness of Utilitarianism is that it can justify slavery or oppression if they benefit the majority.',options:['True','False'],answer:0,explanation:'TRUE. Pure utility calculations could theoretically justify rights violations (like slavery) if they benefit the majority — a major critique.'},
+  {id:66,type:'tf',text:'Kant\'s ethics are highly context-sensitive and flexible depending on circumstances.',options:['True','False'],answer:1,explanation:'FALSE. Kant\'s deontological ethics are rigid and absolute — duties apply universally with no exceptions.'},
+  {id:67,type:'tf',text:'The Kingdom of Ends is the third formulation of the Categorical Imperative.',options:['True','False'],answer:0,explanation:'TRUE. The Formula of Autonomy / Kingdom of Ends is the third of the three formulations of the Categorical Imperative.'},
+  {id:68,type:'tf',text:'Mill believed society should limit individual freedom even when one\'s choices affect only oneself.',options:['True','False'],answer:1,explanation:'FALSE. Mill argued society should only limit a person\'s choices when they cause harm to OTHERS — not for purely self-regarding actions.'},
+  {id:69,type:'tf',text:'Applied Ethics applies moral principles to real-world situations like medicine and AI.',options:['True','False'],answer:0,explanation:'TRUE. Applied Ethics applies ethical principles to concrete real-world situations including medicine, law, AI, and business.'},
+  {id:70,type:'tf',text:'In the Trolley Problem, Kant clearly endorses pulling the lever to save five lives.',options:['True','False'],answer:1,explanation:'FALSE. Kant\'s answer is complicated — diverting the trolley may use one person as a means to save five, violating the Formula of Humanity.'},
+  {id:71,type:'tf',text:'Propinquity in the Hedonic Calculus refers to how many people are affected by the pleasure.',options:['True','False'],answer:1,explanation:'FALSE. Propinquity refers to how soon the pleasure will occur (nearness in time). EXTENT refers to how many people are affected.'},
+  {id:72,type:'tf',text:'Utilitarianism is flexible and context-dependent, while Deontology maintains absolute rules.',options:['True','False'],answer:0,explanation:'TRUE. Utilitarianism is context-sensitive (consequences matter), while Deontology holds absolute rules regardless of consequences.'},
+  {id:73,type:'tf',text:'Immanuel Kant was primarily a utilitarian philosopher.',options:['True','False'],answer:1,explanation:'FALSE. Kant was a deontological philosopher — he rejected utilitarian consequentialism in favor of duty-based ethics.'},
+  {id:74,type:'tf',text:'Bentham\'s auto-icon is a preserved version of his own body kept at UCL.',options:['True','False'],answer:0,explanation:'TRUE. Bentham requested his preserved body (auto-icon) be displayed at University College London as a utilitarian statement.'},
+  {id:75,type:'tf',text:'The strength of Deontology includes providing clear, predictable moral rules.',options:['True','False'],answer:0,explanation:'TRUE. A strength of Deontology is that its rules are clear and consistent — "Do not lie" applies in all circumstances without complex calculations.'},
 
-  // ── ID 9 ──
-  {t:'id',s:'Identification',d:'medium',q:"This philosopher equated Ethics with knowledge — to know the good is to do it.",ans:["socrates"],ex:"Socrates believed that all wrongdoing is due to ignorance of the good.",h:"This Athenian philosopher was Plato's teacher and never wrote anything himself."},
-  {t:'id',s:'Identification',d:'easy',q:"This type of Ethics studies what people SHOULD do — it is prescriptive.",ans:["normative ethics","normative"],ex:"Normative Ethics prescribes moral standards of conduct.",h:"Think 'norm' or standard — what behavior should be."},
-  {t:'id',s:'Identification',d:'easy',q:"This term refers to involuntary actions like breathing that carry no moral value.",ans:["acts of man","act of man"],ex:"Acts of Man are natural and involuntary — they have no moral dimension.",h:"These are the opposite of Human Acts."},
-  {t:'id',s:'Identification',d:'hard',q:"This philosopher proposed 'Justice as Fairness' using the 'veil of ignorance' thought experiment.",ans:["john rawls","rawls"],ex:"Rawls asked: what principles would you choose if you didn't know your social position?",h:"His last name rhymes with 'walls.' A 20th-century American philosopher."},
-  {t:'id',s:'Identification',d:'easy',q:"This branch of philosophy is the study of beauty and art.",ans:["aesthetics"],ex:"Aesthetics examines beauty, artistic taste, and sensory experience.",h:"Think of the modern word 'aesthetic' used in art and design."},
-  {t:'id',s:'Identification',d:'medium',q:"This component of a moral act refers to the motive behind the action.",ans:["intention","intent"],ex:"Intention is the motive or reason driving the act.",h:"It is what is 'in your heart' when you perform the act."},
-  {t:'id',s:'Identification',d:'hard',q:"This German philosopher radically critiqued traditional Christian moral values.",ans:["nietzsche","friedrich nietzsche"],ex:"Nietzsche declared 'God is dead' and challenged conventional morality.",h:"His name starts with 'N' and is famously hard to spell."},
-  {t:'id',s:'Identification',d:'medium',q:"This ethical theory holds that the right action produces the greatest happiness for the greatest number.",ans:["utilitarianism"],ex:"Utilitarianism judges actions by their outcomes and the overall happiness produced.",h:"Think 'utility' — usefulness and benefit to the most people."},
-  {t:'id',s:'Identification',d:'hard',q:"This philosopher developed the 'Ethics of Care,' focusing on relationships and empathy.",ans:["carol gilligan","gilligan"],ex:"Gilligan challenged male-centric moral theories with her relational approach.",h:"First name is Carol. A feminist moral philosopher."},
+  // ── IDENTIFICATION ────────────────────────────────────────
+  {id:76,type:'id',text:'Name the philosopher who founded classical utilitarianism and developed the Hedonic Calculus.',answer:'Jeremy Bentham',acceptedAnswers:['bentham','jeremy bentham'],explanation:'Jeremy Bentham (1748–1832) was the founder of classical utilitarianism and creator of the Hedonic Calculus.'},
+  {id:77,type:'id',text:'What is the name of Bentham\'s mathematical method for measuring pleasure and pain?',answer:'Felicific Calculus',acceptedAnswers:['felicific calculus','hedonic calculus','hedonistic calculus'],explanation:'Bentham\'s method is called the Felicific Calculus (also known as the Hedonic Calculus).'},
+  {id:78,type:'id',text:'Who said: "It is better to be Socrates dissatisfied than a fool satisfied"?',answer:'John Stuart Mill',acceptedAnswers:['john stuart mill','mill','j.s. mill'],explanation:'This famous quote belongs to John Stuart Mill (1806–1873).'},
+  {id:79,type:'id',text:'What is the name of Kant\'s supreme moral principle that all rational agents must follow?',answer:'Categorical Imperative',acceptedAnswers:['categorical imperative','the categorical imperative'],explanation:'Kant\'s supreme moral principle is the Categorical Imperative — absolute, universal, and rational.'},
+  {id:80,type:'id',text:'Name the type of utilitarianism associated with Jeremy Bentham, which judges each individual action separately.',answer:'Act Utilitarianism',acceptedAnswers:['act utilitarianism','act utilitarian'],explanation:'Act Utilitarianism (Bentham) judges each individual act by calculating total utility for all affected parties.'},
+  {id:81,type:'id',text:'Name the type of utilitarianism associated with John Stuart Mill, which follows rules that produce the best outcomes.',answer:'Rule Utilitarianism',acceptedAnswers:['rule utilitarianism','rule utilitarian'],explanation:'Rule Utilitarianism (Mill) follows rules that produce the best outcomes when generally observed.'},
+  {id:82,type:'id',text:'What does Kant call absolute duties that admit no exceptions, such as "do not lie"?',answer:'Perfect Duties',acceptedAnswers:['perfect duties','perfect duty'],explanation:'Perfect Duties are strict, absolute obligations in Kant\'s ethics — no exceptions regardless of consequences.'},
+  {id:83,type:'id',text:'What does Kant call broad duties that must be fulfilled but allow discretion in when and how, such as "help those in need"?',answer:'Imperfect Duties',acceptedAnswers:['imperfect duties','imperfect duty'],explanation:'Imperfect Duties are broad obligations fulfilled with discretion — you must help others, but choose the occasion.'},
+  {id:84,type:'id',text:'Name the formulation of the Categorical Imperative that says "treat humanity always as an end, never merely as a means."',answer:'Formula of Humanity',acceptedAnswers:['formula of humanity','humanity formula'],explanation:'The Formula of Humanity requires never using a person merely as a tool, but always respecting rational agency and dignity.'},
+  {id:85,type:'id',text:'What is Kant\'s vision of an ideal moral community where all rational agents treat each other as ends?',answer:'Kingdom of Ends',acceptedAnswers:['kingdom of ends','the kingdom of ends'],explanation:'The Kingdom of Ends is Kant\'s vision of an ideal moral community — the third formulation of the Categorical Imperative.'},
+  {id:86,type:'id',text:'Name the ethical theory that judges actions solely by their consequences and outcomes.',answer:'Utilitarianism',acceptedAnswers:['utilitarianism','consequentialism'],explanation:'Utilitarianism (a form of consequentialism) judges actions solely by their consequences.'},
+  {id:87,type:'id',text:'Name the ethical theory that judges actions by duty and moral rules, not outcomes.',answer:'Deontology',acceptedAnswers:['deontology','deontological ethics'],explanation:'Deontology is duty-based ethics — the morality of an action comes from following rules/duties, not outcomes.'},
+  {id:88,type:'id',text:'What is the name of the classic thought experiment featuring a runaway trolley and a lever?',answer:'Trolley Problem',acceptedAnswers:['trolley problem','the trolley problem'],explanation:'The Trolley Problem is a classic thought experiment revealing the tension between Utilitarianism and Deontology.'},
+  {id:89,type:'id',text:'Name the Hedonic Calculus dimension that measures the strength or power of the pleasure.',answer:'Intensity',acceptedAnswers:['intensity'],explanation:'Intensity is the first dimension of the Hedonic Calculus — it asks how strong the feeling is.'},
+  {id:90,type:'id',text:'Name the Hedonic Calculus dimension that measures how likely the pleasurable outcome is.',answer:'Certainty',acceptedAnswers:['certainty'],explanation:'Certainty is the third dimension — it asks how sure the outcome is.'},
+  {id:91,type:'id',text:'What branch of ethics asks "What does \'good\' mean?" and examines the nature of moral claims?',answer:'Meta-Ethics',acceptedAnswers:['meta-ethics','metaethics'],explanation:'Meta-Ethics examines the nature of moral claims and asks "What does \'good\' mean?"'},
+  {id:92,type:'id',text:'Name the Kantian concept where all rational beings treat each other with mutual respect in a self-governing community.',answer:'Kingdom of Ends',acceptedAnswers:['kingdom of ends','the kingdom of ends'],explanation:'The Kingdom of Ends is a community of rational agents who collectively legislate moral law and treat each other as ends.'},
+  {id:93,type:'id',text:'What is the name of Bentham\'s proposed circular prison design where guards observe all inmates simultaneously?',answer:'Panopticon',acceptedAnswers:['panopticon','the panopticon'],explanation:'The Panopticon was Bentham\'s prison design — a circular structure where a single guard could observe all inmates.'},
+  {id:94,type:'id',text:'Name the first formulation of the Categorical Imperative that asks whether your maxim can become a universal law.',answer:'Formula of Universal Law',acceptedAnswers:['formula of universal law','universal law','universalizability'],explanation:'The Formula of Universal Law: "Act only according to that maxim whereby you can at the same time will it to become a universal law."'},
+  {id:95,type:'id',text:'What is the branch of philosophy that focuses on questions like "How should we live?" and "What is right and wrong?"',answer:'Ethics',acceptedAnswers:['ethics'],explanation:'Ethics is the branch of philosophy that asks how we should live and what is right and wrong.'},
 
-  // ── FIB 9 ──
-  {t:'fib',s:'Fill in the Blank',d:'easy',q:"Philosophy is derived from two Greek words: ___ (love) and Sophia (wisdom).",ans:["philo"],ex:"'Philo' is Greek for love — the first root of the word 'philosophy.'",h:"A 5-letter word starting with 'P.'"},
-  {t:'fib',s:'Fill in the Blank',d:'easy',q:"___ Ethics describes how people actually behave morally without making judgments.",ans:["descriptive"],ex:"Descriptive Ethics observes and records without prescribing behavior.",h:"Starts with 'D' — think describing, not prescribing."},
-  {t:'fib',s:'Fill in the Blank',d:'easy',q:"The study of reality and existence in philosophy is called ___.",ans:["metaphysics"],ex:"Metaphysics deals with the fundamental nature of reality.",h:"A 10-letter word starting with 'meta.'"},
-  {t:'fib',s:'Fill in the Blank',d:'hard',q:"Immanuel Kant's ethical theory is called ___ Ethics, centered on duty.",ans:["deontological","deontology"],ex:"Kant's ethics is Deontological — based on duty and the categorical imperative.",h:"From Greek 'deon' meaning duty."},
-  {t:'fib',s:'Fill in the Blank',d:'medium',q:"John Stuart Mill refined Bentham's utilitarianism into ___ Utilitarianism.",ans:["rule"],ex:"Mill developed Rule Utilitarianism, emphasizing rules that produce good outcomes.",h:"A single 4-letter word — following principles rather than calculating each case."},
-  {t:'fib',s:'Fill in the Blank',d:'medium',q:"The ___ component of a moral act refers to the goal or purpose.",ans:["end"],ex:"The 'end' is the goal or purpose the person aims to achieve through the act.",h:"A 3-letter word meaning purpose or conclusion."},
-  {t:'fib',s:'Fill in the Blank',d:'medium',q:"___ Egoism is a normative theory stating people ought to act in their own self-interest.",ans:["ethical"],ex:"Ethical Egoism prescribes self-interested behavior as morally correct.",h:"Starts with 'E' — the normative (prescriptive) version of egoism."},
-  {t:'fib',s:'Fill in the Blank',d:'easy',q:"The branch of philosophy known as ___ is the study of correct reasoning.",ans:["logic"],ex:"Logic is the study of valid and correct reasoning.",h:"A 5-letter word used in math, computing, and philosophy."},
-  {t:'fib',s:'Fill in the Blank',d:'medium',q:"Plato's ethical theory centers on ___ and harmony of the soul.",ans:["justice"],ex:"Plato emphasized justice and harmony as the foundation of ethical life.",h:"7 letters — the virtue Plato valued most in his ideal state."}
+  // ── CLASSIFY: TYPE OF UTILITARIANISM ─────────────────────
+  {id:96,type:'classify',text:'A judge decides that in this particular robbery case, imprisoning the thief will produce the most happiness for the community — so they sentence him accordingly, calculating consequences for this specific act.\n\nWhat type of Utilitarianism is this?',options:['Act Utilitarianism','Rule Utilitarianism'],answer:0,explanation:'Act Utilitarianism — each individual act is judged by calculating total utility. The judge is evaluating this specific case.'},
+  {id:97,type:'classify',text:'A hospital follows a strict policy: "Always offer equal treatment regardless of wealth" because following this rule generally produces the best outcomes for society as a whole.\n\nWhat type of Utilitarianism does this policy reflect?',options:['Act Utilitarianism','Rule Utilitarianism'],answer:1,explanation:'Rule Utilitarianism — a rule is followed because generally observing it produces the best outcomes, even if breaking it in some cases might produce better utility.'},
+  {id:98,type:'classify',text:'A government evaluates each proposed tax law individually, calculating whether it will increase or decrease total national happiness before passing it.\n\nWhat type of Utilitarianism guides this approach?',options:['Act Utilitarianism','Rule Utilitarianism'],answer:0,explanation:'Act Utilitarianism — each individual law/act is evaluated by calculating total utility for all affected parties.'},
+  {id:99,type:'classify',text:'A school adopts the rule "Do not cheat on exams" because following this rule across all students and situations generally produces a more educated and fair society.\n\nWhat type of Utilitarianism is this?',options:['Act Utilitarianism','Rule Utilitarianism'],answer:1,explanation:'Rule Utilitarianism — the rule "do not cheat" is adopted because it generally produces better outcomes when universally followed.'},
+  {id:100,type:'classify',text:'A doctor decides whether to tell a terminal patient the truth by calculating how much happiness or pain the truth will cause in this particular case.\n\nWhat type of Utilitarianism is the doctor applying?',options:['Act Utilitarianism','Rule Utilitarianism'],answer:0,explanation:'Act Utilitarianism — the doctor is calculating utility for this specific individual act, not following a rule.'},
+  {id:101,type:'classify',text:'Mill argues that adhering to the secondary principle "keep your promises" generally produces better outcomes for society, even if breaking a promise might sometimes yield more utility in a particular case.\n\nThis reflects which type of Utilitarianism?',options:['Act Utilitarianism','Rule Utilitarianism'],answer:1,explanation:'Rule Utilitarianism — Mill\'s approach involves following secondary principles (like "keep promises") that generally maximize utility.'},
+  {id:102,type:'classify',text:'A politician uses Bentham\'s Hedonic Calculus to calculate the utility of each policy decision on a case-by-case basis, asking "which choice produces the most happiness right now?"\n\nWhat type of Utilitarianism is this?',options:['Act Utilitarianism','Rule Utilitarianism'],answer:0,explanation:'Act Utilitarianism — using the Hedonic Calculus to judge each individual act reflects Bentham\'s Act Utilitarian approach.'},
+  {id:103,type:'classify',text:'Bentham\'s approach to legislation: each law should be evaluated individually to determine whether it produces more happiness than unhappiness for the population affected.\n\nWhat type of Utilitarianism is this?',options:['Act Utilitarianism','Rule Utilitarianism'],answer:0,explanation:'Act Utilitarianism — Bentham\'s method evaluates each individual act (or law) by calculating total utility.'},
+
+  // ── CLASSIFY: UTILITARIANISM OR DEONTOLOGY ───────────────
+  {id:104,type:'classify',text:'A doctor refuses to lie to a patient about their diagnosis, even though the truth will cause significant distress, because lying violates an absolute moral duty regardless of consequences.\n\nIs this Utilitarianism or Deontology?',options:['Utilitarianism','Deontology'],answer:1,explanation:'Deontology — the doctor is following an absolute duty ("do not lie"), ignoring consequences. This reflects Kantian perfect duty.'},
+  {id:105,type:'classify',text:'A company chooses to disclose a product defect publicly, even though it will cost them millions, because they calculated that the damage to public trust and harm to customers outweighs the financial benefit of concealment.\n\nIs this Utilitarianism or Deontology?',options:['Utilitarianism','Deontology'],answer:0,explanation:'Utilitarianism — the decision is based on calculating outcomes and consequences (greater harm vs. financial benefit).'},
+  {id:106,type:'classify',text:'A soldier refuses to torture a prisoner for information, stating: "Using a human being as a mere instrument is always wrong, regardless of how many lives it might save."\n\nIs this Utilitarianism or Deontology?',options:['Utilitarianism','Deontology'],answer:1,explanation:'Deontology — this reflects the Formula of Humanity: people must never be used merely as means, regardless of consequences.'},
+  {id:107,type:'classify',text:'A legislature passes a policy to redistribute wealth from the rich to the poor, arguing it will increase total happiness in the nation because the poor benefit more from additional income than the rich lose.\n\nIs this Utilitarianism or Deontology?',options:['Utilitarianism','Deontology'],answer:0,explanation:'Utilitarianism — the policy is justified by maximizing total happiness across the population.'},
+  {id:108,type:'classify',text:'An AI ethics framework states: "User consent must always be obtained before data collection — there are no exceptions, regardless of what benefits might result."\n\nIs this Utilitarianism or Deontology?',options:['Utilitarianism','Deontology'],answer:1,explanation:'Deontology — absolute rules with no exceptions regardless of consequences is deontological (Kantian).'},
+  {id:109,type:'classify',text:'During a pandemic, limited ventilators are allocated to patients with the best prognosis — those most likely to survive — to maximize lives saved overall.\n\nIs this Utilitarianism or Deontology?',options:['Utilitarianism','Deontology'],answer:0,explanation:'Utilitarianism — allocating resources to maximize lives saved reflects utilitarian triage thinking.'},
+  {id:110,type:'classify',text:'A criminal justice system punishes criminals proportionally to what they deserve, not to deter future crime, maintaining that punishment must be earned regardless of social benefit.\n\nIs this Utilitarianism or Deontology?',options:['Utilitarianism','Deontology'],answer:1,explanation:'Deontology — Kant\'s retributive justice: punishment must be deserved, not merely instrumental. Punishing for deterrence uses the criminal as a means.'},
+  {id:111,type:'classify',text:'An environmental policy is adopted because analysis shows it will maximize well-being across the most people and future generations, even at significant cost to current industries.\n\nIs this Utilitarianism or Deontology?',options:['Utilitarianism','Deontology'],answer:0,explanation:'Utilitarianism — maximizing well-being across the greatest number, including future generations, is utilitarian reasoning.'},
+  {id:112,type:'classify',text:'A journalist refuses to reveal a confidential source even though doing so would help convict a dangerous criminal, because keeping promises is an absolute moral duty.\n\nIs this Utilitarianism or Deontology?',options:['Utilitarianism','Deontology'],answer:1,explanation:'Deontology — keeping promises regardless of consequences reflects Kantian perfect duty (do not break promises).'},
+  {id:113,type:'classify',text:'A manager decides to lay off 10 workers to save the company, preserving jobs for the remaining 90. The decision is made purely based on the greatest benefit for the greatest number.\n\nIs this Utilitarianism or Deontology?',options:['Utilitarianism','Deontology'],answer:0,explanation:'Utilitarianism — the decision is made by maximizing overall welfare (90 jobs saved outweighs 10 lost).'},
+
+  // ── SCENARIO / SITUATION TYPE ─────────────────────────────
+  {id:114,type:'scenario',text:'SCENARIO: A city government must decide whether to build a new highway through a small neighborhood, displacing 200 residents but benefiting 50,000 daily commuters.\n\nAn official argues: "We should build it — the happiness of 50,000 people far outweighs the suffering of 200." This official is applying which ethical framework?',options:['Deontology — because it follows an absolute rule','Utilitarianism — because it maximizes overall happiness','Virtue Ethics — because it builds character','Meta-Ethics — because it questions what "good" means'],answer:1,explanation:'This is Utilitarianism — the greatest happiness for the greatest number. The 50,000 beneficiaries outweigh the 200 displaced in utilitarian calculus.'},
+  {id:115,type:'scenario',text:'SCENARIO: A student discovers their peer is cheating on an exam. They choose not to report it, thinking: "Reporting will ruin their scholarship, cause family hardship, and make everyone sad — the harm outweighs any benefit."\n\nWhat ethical framework is the student using?',options:['Deontology','Rule Utilitarianism','Act Utilitarianism','Categorical Imperative'],answer:2,explanation:'Act Utilitarianism — the student is calculating the specific consequences of this individual act (reporting vs. not reporting) to maximize utility.'},
+  {id:116,type:'scenario',text:'SCENARIO: A nurse is asked by a family to tell their dying patient a white lie to spare them distress. The nurse refuses, saying: "I have a duty to tell the truth to my patients. It is not mine to deceive, regardless of the outcome."\n\nWhich ethical theory does the nurse apply?',options:['Act Utilitarianism','Rule Utilitarianism','Deontology','Applied Ethics'],answer:2,explanation:'Deontology — the nurse is following an absolute duty to tell the truth, regardless of the consequences (patient distress).'},
+  {id:117,type:'scenario',text:'SCENARIO: An engineer discovers a flaw in a bridge design that could be fixed at a cost of $10 million. The probability of failure is 0.1%, but the bridge serves 2 million people. She recommends fixing it because the expected harm (0.1% × 2 million = 2,000 potential casualties) justifies the cost.\n\nThis is an example of:',options:['Kantian Deontology','Rule Utilitarianism','Act Utilitarianism','Kingdom of Ends reasoning'],answer:2,explanation:'Act Utilitarianism — calculating expected harm vs. cost for this specific situation and choosing the action that maximizes overall welfare.'},
+  {id:118,type:'scenario',text:'SCENARIO: A lawyer is asked to defend a client they know is guilty. They do so anyway, saying: "Every person deserves a legal defense — this is a universal duty of the legal system regardless of guilt."\n\nThis reflects which ethical framework?',options:['Utilitarianism','Act Utilitarianism','Deontology','Meta-Ethics'],answer:2,explanation:'Deontology — following the absolute duty to provide legal defense, independent of the consequences of defending a guilty party.'},
+  {id:119,type:'scenario',text:'SCENARIO: A tech company is developing an AI recommendation algorithm. One team argues: "We should optimize for total user engagement — that maximizes happiness across all users." The other team argues: "We must get informed consent for data use — this is a right, not subject to utility calculations."\n\nWhich team represents which theory?',options:['First team = Deontology, Second team = Utilitarianism','First team = Utilitarianism, Second team = Deontology','Both teams = Utilitarianism','Both teams = Deontology'],answer:1,explanation:'First team = Utilitarianism (maximize aggregate happiness); Second team = Deontology (consent is an absolute right, not subject to utility).'},
+  {id:120,type:'scenario',text:'SCENARIO: In a famine, a government has 1,000 units of food. Option A feeds 100 people completely. Option B gives a small amount to 500 people, keeping more alive. A utilitarian advisor recommends Option B. Why?',options:['Because it follows the Categorical Imperative','Because it maximizes the number of lives sustained (500 > 100)','Because it treats everyone as an end in themselves','Because it follows the Formula of Universal Law'],answer:1,explanation:'Utilitarianism — maximizing the number of people benefited (500) produces greater overall utility than Option A (100).'},
+  {id:121,type:'scenario',text:'SCENARIO: Amara asks herself before every decision: "What if everyone in the world did exactly what I\'m about to do? Would society still function?" She rejects actions where the answer is "no."\n\nAmara is applying which formulation of the Categorical Imperative?',options:['Formula of Humanity','Kingdom of Ends','Formula of Universal Law','Principle of Utility'],answer:2,explanation:'Formula of Universal Law — testing whether your maxim can be universalized without contradiction or social breakdown.'},
+  {id:122,type:'scenario',text:'SCENARIO: A philosopher argues that a wealthy nation has an obligation to donate significantly to global poverty relief because it maximizes total happiness worldwide. The obligation exists even at significant personal cost to citizens.\n\nThis reflects which ethical framework, and which critique applies to it?',options:['Deontology — the Rigidity critique','Utilitarianism — the Demandingness critique','Rule Utilitarianism — the Rights Violations critique','Deontology — the Conflicting Duties critique'],answer:1,explanation:'Utilitarianism — the Demandingness critique: Utilitarianism always requires maximizing good even at extreme personal cost, which may be unreasonably demanding.'},
+  {id:123,type:'scenario',text:'SCENARIO: A whistleblower exposes their company\'s environmental violations despite facing personal ruin. They say: "I am acting from duty — to protect the public is a moral obligation, not a choice I can weigh against my career."\n\nWhat ethical framework is this?',options:['Act Utilitarianism','Rule Utilitarianism','Deontology','Applied Ethics'],answer:2,explanation:'Deontology — the whistleblower is acting from duty, not from a calculation of consequences for themselves.'},
+  {id:124,type:'scenario',text:'SCENARIO: A hospital policy states: "No patient may be turned away regardless of ability to pay." The policy was adopted because analysis showed that universally applying this rule produces better health outcomes and social trust overall.\n\nWhat type of Utilitarianism is this policy based on?',options:['Act Utilitarianism','Rule Utilitarianism','Bentham\'s Calculus','Kantian Duty'],answer:1,explanation:'Rule Utilitarianism — the policy (a rule) was adopted because following it generally produces the best overall outcomes.'},
+  {id:125,type:'scenario',text:'SCENARIO: A self-driving car must choose: swerve and hit one pedestrian to save five passengers, or stay on course and harm five passengers to avoid the pedestrian. From a strict Kantian view, what is the problem with programming the car to always sacrifice one to save five?',options:['It violates the Principle of Utility','It fails to maximize overall happiness','It uses the pedestrian as a mere means to save the passengers, violating the Formula of Humanity','It contradicts the Formula of Universal Law'],answer:2,explanation:'Kantian critique: programming the car to sacrifice one person uses that person as a mere means to save others — a violation of the Formula of Humanity.'},
+
+  // ── ADDITIONAL MC FOR FULL COVERAGE ──────────────────────
+  {id:126,type:'mc',text:'Which of the following is a strength specifically attributed to Deontology?',options:['Provides flexible, context-sensitive moral guidance','Maximizes social welfare effectively','Provides absolute respect for human dignity and clear rules','Guides public health policy through cost-benefit analysis'],answer:2,explanation:'Deontology\'s strength lies in providing absolute respect for human dignity — every person is treated as an end — and clear, consistent rules.'},
+  {id:127,type:'mc',text:'The "Justice Problem" is a critique of Utilitarianism that refers to:',options:['Difficulty calculating happiness mathematically','Sacrificing one innocent person for the greater good seeming unjust','Being too demanding on individuals','Ignoring individual rights and duties'],answer:1,explanation:'The Justice Problem: sacrificing one innocent person for the greater good seems deeply unjust — even if it maximises utility.'},
+  {id:128,type:'mc',text:'Which modern field of ethics involves applying moral principles to questions about artificial intelligence?',options:['Meta-Ethics','Descriptive Ethics','Applied Ethics','Historical Ethics'],answer:2,explanation:'Applied Ethics applies moral principles to real-world situations, including artificial intelligence.'},
+  {id:129,type:'mc',text:'Kant\'s upbringing in a _______ Lutheran family influenced his structured intellectual approach.',options:['Calvinist','Pietist','Orthodox','Baptist'],answer:1,explanation:'Kant was raised in a Pietist Lutheran family, which emphasized religious devotion, humility, and discipline.'},
+  {id:130,type:'mc',text:'When universalizing the maxim "I will lie to get what I want" leads to a world where truth dissolves and lying becomes pointless, this demonstrates:',options:['The Demandingness critique','Fecundity in the Hedonic Calculus','The Contradiction Test of the Formula of Universal Law','The Kingdom of Ends'],answer:2,explanation:'This is the Contradiction Test — if everyone lied, truth would dissolve and lying itself would become pointless, proving the maxim is immoral.'},
+  {id:131,type:'mc',text:'In environmental ethics, which approach argues that policies should maximize well-being across the most people and future generations?',options:['Kantian Deontology','Virtue Ethics','Utilitarianism','Applied Deontology'],answer:2,explanation:'Utilitarianism advocates for environmental policies that maximize overall well-being across present and future generations.'},
+  {id:132,type:'mc',text:'Which criticism of Deontology states that ignoring outcomes entirely can lead to terrible real-world results?',options:['Rigidity critique','Conflicting Duties critique','Neglects Consequences critique','Too Abstract critique'],answer:2,explanation:'"Neglects Consequences" — by ignoring outcomes entirely, deontology can lead to terrible real-world results. Consequences matter.'},
+  {id:133,type:'mc',text:'John Stuart Mill was a philosopher, economist, and:',options:['Jurist','Social Reformer','Military General','Theologian'],answer:1,explanation:'Mill was described as a Philosopher, Economist, and Social Reformer.'},
+  {id:134,type:'mc',text:'Bentham\'s principle that "laws should be evaluated purely by utility" means:',options:['Laws must protect individual rights at all costs','Laws should be assessed by whether they make more people happy than unhappy','Laws must follow absolute moral duties','Laws must reflect the will of the majority only'],answer:1,explanation:'Bentham believed laws should be evaluated purely by utility: does this law make more people happy than unhappy?'},
+  {id:135,type:'mc',text:'Which of the following illustrates the "Measurement Problem" critique of Utilitarianism?',options:['Utilitarianism can justify enslaving a minority for majority benefit','It is unclear how to quantitatively compare the happiness of different people','Utilitarianism requires too much personal sacrifice','Utilitarianism is too rigid and rules-based'],answer:1,explanation:'The Measurement Problem: it is very difficult to calculate and compare happiness across different people using the Hedonic Calculus in practice.'},
+  {id:136,type:'mc',text:'According to the Formula of Universal Law, an action is immoral if:',options:['It causes more pain than pleasure','It reduces total social utility','Universalizing its maxim leads to a contradiction or self-defeat','It violates an imperfect duty'],answer:2,explanation:'An action is immoral if universalizing its maxim creates a logical contradiction or self-defeat (e.g., universal lying destroys the concept of truth).'},
+  {id:137,type:'mc',text:'Which statement best describes Kant\'s view on punishing an innocent person to deter crime?',options:['Acceptable if it reduces crime rates significantly','Acceptable under Act Utilitarianism but not Kantian ethics','Wrong — it uses an innocent person as a mere means, violating their dignity','Acceptable only if the innocent person consents'],answer:2,explanation:'For Kant, punishing an innocent person for deterrence is wrong — it uses them merely as a means to achieve social benefit, violating the Formula of Humanity.'},
+  {id:138,type:'mc',text:'Both Utilitarianism and Deontology demand that we:',options:['Always prioritize personal happiness','Step beyond self-interest in moral reasoning','Measure pleasure using the Hedonic Calculus','Follow the Categorical Imperative'],answer:1,explanation:'Both theories demand we step beyond self-interest — both agree that morality requires impartial consideration of others.'},
+  {id:139,type:'mc',text:'The critique that Kant\'s ethics are "too abstract" refers to the fact that:',options:['Kant\'s rules are too vague to be applied practically','Kant\'s ethics are highly rational and detached from emotion, compassion, and sentiment','Kant ignores the importance of consequences','Kant\'s rules change depending on cultural context'],answer:1,explanation:'The "Too Abstract" critique: Kant\'s ethics are highly rational and detached from human emotion, compassion, and natural sentiment.'},
+  {id:140,type:'mc',text:'What term describes Utilitarianism\'s ethical perspective where only outcomes determine the moral worth of an action?',options:['Deontology','Virtue Ethics','Consequentialism','Divine Command Theory'],answer:2,explanation:'Consequentialism is the broader ethical perspective where only outcomes/consequences determine moral worth — Utilitarianism is its most famous form.'},
+  {id:141,type:'mc',text:'Which historical document published by Kant in 1785 is related to his ethical framework?',options:['Critique of Pure Reason','Utilitarianism','Groundwork for the Metaphysics of Morals','The Republic'],answer:2,explanation:'In 1785, Kant published the "Groundwork for the Metaphysics of Morals," which laid out his deontological ethical framework.'},
+  {id:142,type:'mc',text:'Which ethical theory would most likely support rationing food during a famine to feed the largest number of people possible?',options:['Deontology','Virtue Ethics','Utilitarianism','Divine Command Theory'],answer:2,explanation:'Utilitarianism would support food rationing that feeds the greatest number — maximizing overall welfare.'},
+  {id:143,type:'mc',text:'Kant\'s claim that you must not lie even to a murderer asking where your friend is hiding illustrates which critique?',options:['The Demandingness Problem','The Rigidity Problem','The Measurement Problem','The Justice Problem'],answer:1,explanation:'Rigidity — Kant\'s absolute rule against lying applies even in extreme situations, ignoring context and real-world consequences.'},
+  {id:144,type:'mc',text:'In Kant\'s ethics, "acting from duty" means:',options:['Doing what produces the best outcome','Acting to maximize personal happiness','Performing an action because it is morally required, not for personal gain or desire','Following whichever rule benefits the majority'],answer:2,explanation:'Acting from duty means performing an action because it is morally required by reason — not for personal gain, desire, or expected benefit.'},
+  {id:145,type:'mc',text:'Which of the following is NOT one of Bentham\'s 7 dimensions of the Hedonic Calculus?',options:['Fecundity','Propinquity','Universality','Purity'],answer:2,explanation:'Universality is NOT one of the 7 dimensions. The 7 are: Intensity, Duration, Certainty, Propinquity, Fecundity, Purity, and Extent.'},
+  {id:146,type:'mc',text:'Mill\'s "harm principle" states that society should only restrict freedom when:',options:['An individual\'s actions violate a perfect duty','A person\'s choices fail to maximize social utility','An action causes harm to others','An action violates the Categorical Imperative'],answer:2,explanation:'Mill\'s harm principle: society should only limit a person\'s freedom when their choices cause harm to others.'},
+  {id:147,type:'mc',text:'What does the Principle of Impartiality in Utilitarianism mean?',options:['The decision-maker\'s own happiness is most important','Every person\'s happiness counts equally — no one is privileged','Only the majority\'s happiness matters','Only those directly affected count in utility calculations'],answer:1,explanation:'Impartiality in Utilitarianism: every person\'s happiness counts equally — rich or poor, powerful or powerless.'},
+  {id:148,type:'mc',text:'Which formulation of the Categorical Imperative focuses on acting as a member of a community where all rational agents legislate moral law together?',options:['Formula of Universal Law','Formula of Humanity','Formula of Autonomy / Kingdom of Ends','Formula of Duty'],answer:2,explanation:'The Formula of Autonomy / Kingdom of Ends: act as a member of an ideal community where every rational agent treats others as ends and collectively legislates moral law.'},
+  {id:149,type:'mc',text:'The "Demandingness Critique" of Utilitarianism argues that:',options:['Utilitarianism cannot explain human rights violations','Utilitarianism always demands we maximize good — even at extreme personal cost — which may be unreasonable','Utilitarianism is too focused on rules and ignores consequences','Utilitarianism fails to account for justice and fairness'],answer:1,explanation:'The Demandingness Critique: Utilitarianism always requires maximizing good — even at extreme personal cost — which may be too demanding of individuals.'},
+  {id:150,type:'mc',text:'Modern applied ethics often combines both Utilitarianism and Deontology. Which statement best describes this synthesis?',options:['Use utility calculations only and ignore individual rights','Use deontological rules only and ignore consequences','Use consequentialist tools to assess outcomes AND deontological constraints to protect individual rights','Pick whichever theory benefits the majority in each situation'],answer:2,explanation:'Modern applied ethics combines both: consequentialist tools assess real-world impact, while deontological constraints protect individuals from being sacrificed for aggregate benefit.'}
 ];
 
-/* ═══════════════════════════════
-   STATE
-═══════════════════════════════ */
-var answered    = new Array(50).fill(null);  // null = untouched
-var corrArr     = new Array(50).fill(false);
-var bookmarks   = new Array(50).fill(false);
-var corrCount   = 0;
-var wrgCount    = 0;
-var xp          = 0;
-var curStreak   = 0;
-var bestStreak  = 0;
-var hintsLeft   = 3;
-var timerID     = null;
-var secsLeft    = 2700;
-var startSecs   = 2700;
-var musicOn     = true;
-var musicPlay   = false;
-var hintsEn     = true;
-var diff        = 'easy';
-var aCtx        = null;
-var gainN       = null;
-var chordI      = 0;
-var chordTID    = null;
-var toastTID    = null;
+// ============================================================
+// QUIZ ENGINE
+// ============================================================
+let sessionQuestions = [];
+let currentIndex = 0;
+let score = 0;
+let answered = 0;
+let userAnswers = [];
+let submitted = false;
 
-/* ═══ STARS ═══ */
-(function(){
-  var c=document.getElementById('stars');
-  for(var i=0;i<80;i++){
-    var el=document.createElement('div');
-    el.className='star';
-    var sz=Math.random()*2+0.5;
-    el.style.cssText='width:'+sz+'px;height:'+sz+'px;top:'+(Math.random()*100)+'%;left:'+(Math.random()*100)+'%;--d:'+(2+Math.random()*4)+'s;animation-delay:'+(-Math.random()*5)+'s;';
-    c.appendChild(el);
+function shuffle(arr) {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
   }
-})();
+  return a;
+}
 
-/* ═══ PREFS ═══ */
-var curTheme='midnight';
-var THEMES=['midnight','ocean','forest','sunset','light'];
+function startQuiz() {
+  sessionQuestions = shuffle(BANK).slice(0, 30);
+  currentIndex = 0;
+  score = 0;
+  answered = 0;
+  userAnswers = new Array(30).fill(null);
 
-function setTheme(t){
-  curTheme=t;
-  // remove all theme classes
-  document.body.className='';
-  if(t!=='midnight')document.body.classList.add('th-'+t);
-  if(t==='light')document.body.classList.add('light');
-  // update buttons
-  THEMES.forEach(function(x){
-    var el=document.getElementById('th-'+x);
-    if(el)el.className='thbtn th-'+x+(x===t?' ton':'');
+  document.getElementById('landing').style.display = 'none';
+  document.getElementById('results-screen').style.display = 'none';
+  document.getElementById('quiz-screen').style.display = 'block';
+  window.scrollTo(0, 0);
+
+  renderQuestion();
+}
+
+function renderQuestion() {
+  submitted = false;
+  const q = sessionQuestions[currentIndex];
+  const pct = Math.round((currentIndex / 30) * 100);
+
+  document.getElementById('q-counter').textContent = `Question ${currentIndex + 1} of 30`;
+  document.getElementById('score-live').textContent = `Score: ${score}`;
+  document.getElementById('prog-pct').textContent = `${pct}%`;
+  document.getElementById('progress-fill').style.width = `${pct}%`;
+
+  const typeLabels = { mc: 'Multiple Choice', tf: 'True or False', id: 'Identification', classify: 'Classify', scenario: 'Scenario' };
+  const typeClass = { mc: 'type-mc', tf: 'type-tf', id: 'type-id', classify: 'type-classify', scenario: 'type-scenario' };
+
+  let optionsHtml = '';
+  if (q.type === 'id') {
+    const prev = userAnswers[currentIndex];
+    optionsHtml = `<input type="text" class="id-input" id="id-input" placeholder="Type your answer here..." value="${prev || ''}" onkeydown="if(event.key==='Enter')submitAnswer()">`;
+  } else {
+    const letters = ['A', 'B', 'C', 'D'];
+    const opts = q.type === 'classify' || q.type === 'tf' ? q.options : q.options;
+    optionsHtml = `<div class="options-list">` +
+      opts.map((opt, i) => `
+        <button class="option-btn" id="opt-${i}" onclick="selectOption(${i})">
+          <span class="opt-letter">${letters[i]}</span>
+          <span>${opt}</span>
+        </button>`).join('') +
+      `</div>`;
+  }
+
+  document.getElementById('q-container').innerHTML = `
+    <div class="q-card ${typeClass[q.type]}">
+      <div class="q-type-badge">${typeLabels[q.type]}</div>
+      <div class="q-number">Question ${currentIndex + 1}</div>
+      <div class="q-text">${q.text.replace(/\n/g, '<br>')}</div>
+      ${optionsHtml}
+      <div class="feedback-box" id="feedback-box"></div>
+    </div>`;
+
+  // Restore previous selection
+  if (userAnswers[currentIndex] !== null && q.type !== 'id') {
+    document.getElementById(`opt-${userAnswers[currentIndex]}`)?.classList.add('selected');
+  }
+
+  document.getElementById('btn-submit').disabled = false;
+  document.getElementById('btn-submit').style.display = 'inline-block';
+  const btnNext = document.getElementById('btn-next');
+  btnNext.style.display = 'none';
+  btnNext.className = 'btn-next';
+}
+
+function selectOption(index) {
+  if (submitted) return;
+  const q = sessionQuestions[currentIndex];
+  const count = q.options.length;
+  for (let i = 0; i < count; i++) {
+    document.getElementById(`opt-${i}`)?.classList.remove('selected');
+  }
+  document.getElementById(`opt-${index}`).classList.add('selected');
+  userAnswers[currentIndex] = index;
+}
+
+function submitAnswer() {
+  if (submitted) return;
+  const q = sessionQuestions[currentIndex];
+  submitted = true;
+
+  let isCorrect = false;
+  let userVal = null;
+
+  if (q.type === 'id') {
+    const input = document.getElementById('id-input');
+    userVal = input.value.trim();
+    const normalized = userVal.toLowerCase().replace(/[^a-z0-9\s]/g, '').trim();
+    isCorrect = q.acceptedAnswers.some(a => normalized === a.toLowerCase().replace(/[^a-z0-9\s]/g, '').trim());
+    input.classList.add(isCorrect ? 'correct' : 'wrong');
+    userAnswers[currentIndex] = userVal;
+  } else {
+    userVal = userAnswers[currentIndex];
+    if (userVal === null) {
+      // skip
+      showFeedback(false, `You skipped this question. Correct answer: <strong>${q.options[q.answer]}</strong><br>${q.explanation}`);
+      document.getElementById('btn-submit').style.display = 'none';
+      document.getElementById('btn-next').style.display = 'inline-flex';
+      document.getElementById('btn-next').classList.add('show');
+      answered++;
+      return;
+    }
+    isCorrect = userVal === q.answer;
+    const count = q.options.length;
+    for (let i = 0; i < count; i++) {
+      const btn = document.getElementById(`opt-${i}`);
+      if (!btn) continue;
+      btn.disabled = true;
+      if (i === q.answer) btn.classList.add('correct');
+      else if (i === userVal && !isCorrect) btn.classList.add('wrong');
+    }
+  }
+
+  if (isCorrect) {
+    score++;
+    showFeedback(true, `✓ Correct! ${q.explanation}`);
+  } else {
+    const correctText = q.type === 'id' ? q.answer : q.options[q.answer];
+    showFeedback(false, `✗ Incorrect. Correct answer: <strong>${correctText}</strong><br>${q.explanation}`);
+  }
+
+  document.getElementById('score-live').textContent = `Score: ${score}`;
+  document.getElementById('btn-submit').style.display = 'none';
+  answered++;
+
+  const btnNext = document.getElementById('btn-next');
+  if (currentIndex < 29) {
+    btnNext.textContent = 'Next Question →';
+  } else {
+    btnNext.textContent = 'See Results →';
+  }
+  btnNext.style.display = 'inline-flex';
+  btnNext.classList.add('show');
+}
+
+function showFeedback(correct, msg) {
+  const fb = document.getElementById('feedback-box');
+  fb.className = `feedback-box show ${correct ? 'correct' : 'wrong'}`;
+  fb.innerHTML = msg;
+}
+
+function nextQuestion() {
+  if (currentIndex < 29) {
+    currentIndex++;
+    renderQuestion();
+    window.scrollTo(0, 0);
+  } else {
+    showResults();
+  }
+}
+
+function showResults() {
+  document.getElementById('quiz-screen').style.display = 'none';
+  document.getElementById('results-screen').style.display = 'block';
+  window.scrollTo(0, 0);
+
+  const pct = Math.round((score / 30) * 100);
+  let grade, gradeColor;
+  if (pct >= 95) { grade = 'Outstanding — A+'; gradeColor = 'linear-gradient(135deg,#00c9a7,#00e6c0)'; }
+  else if (pct >= 90) { grade = 'Excellent — A'; gradeColor = 'linear-gradient(135deg,#00c9a7,#2edfc7)'; }
+  else if (pct >= 85) { grade = 'Very Good — B+'; gradeColor = 'linear-gradient(135deg,#6c63ff,#8b85ff)'; }
+  else if (pct >= 80) { grade = 'Good — B'; gradeColor = 'linear-gradient(135deg,#6c63ff,#a78bfa)'; }
+  else if (pct >= 75) { grade = 'Satisfactory — C+'; gradeColor = 'linear-gradient(135deg,#f5a623,#ffc86b)'; }
+  else if (pct >= 70) { grade = 'Passing — C'; gradeColor = 'linear-gradient(135deg,#f5a623,#ffb347)'; }
+  else { grade = 'Needs Review — F'; gradeColor = 'linear-gradient(135deg,#ff6b6b,#ff9a9a)'; }
+
+  document.getElementById('final-score').textContent = `${score}/30`;
+  document.getElementById('score-pct-label').textContent = `${pct}% — Keep studying!`;
+  const gb = document.getElementById('grade-badge');
+  gb.textContent = grade;
+  gb.style.background = gradeColor;
+  gb.style.color = '#fff';
+
+  // Count wrong
+  let wrongCount = 0;
+  let skipCount = 0;
+  sessionQuestions.forEach((q, i) => {
+    const ua = userAnswers[i];
+    if (ua === null) { skipCount++; }
+    else if (q.type === 'id') {
+      const n = (ua || '').toLowerCase().replace(/[^a-z0-9\s]/g,'').trim();
+      if (!q.acceptedAnswers.some(a => n === a.toLowerCase().replace(/[^a-z0-9\s]/g,'').trim())) wrongCount++;
+    } else {
+      if (ua !== q.answer) wrongCount++;
+    }
   });
-}
-function togglePref(k){
-  if(k==='music'){musicOn=!musicOn;setSW('sw-music',musicOn);}
-  else if(k==='hints'){hintsEn=!hintsEn;setSW('sw-hints',hintsEn);}
-}
-function setSW(id,on){document.getElementById(id).className='sw'+(on?' on':'');}
-function toggleTheme(){
-  // cycle through themes from quiz header button
-  var idx=THEMES.indexOf(curTheme);
-  setTheme(THEMES[(idx+1)%THEMES.length]);
-}
-function setDiff(d){
-  diff=d;
-  ['easy','medium','hard'].forEach(function(x){
-    var el=document.getElementById('d-'+x);
-    el.className='dbtn '+x+(x===d?' on':'');
+
+  document.getElementById('rb-correct').textContent = score;
+  document.getElementById('rb-wrong').textContent = wrongCount;
+  document.getElementById('rb-skip').textContent = skipCount;
+
+  // Review list (wrong only)
+  const reviewList = document.getElementById('review-list');
+  reviewList.innerHTML = '<h3 style="font-family:\'Playfair Display\',serif;font-size:1.3rem;margin-bottom:1rem;color:var(--white);">Review Incorrect Answers</h3>';
+  let hasWrong = false;
+  sessionQuestions.forEach((q, i) => {
+    const ua = userAnswers[i];
+    let isCorrect = false;
+    if (ua === null) return;
+    if (q.type === 'id') {
+      const n = (ua || '').toLowerCase().replace(/[^a-z0-9\s]/g,'').trim();
+      isCorrect = q.acceptedAnswers.some(a => n === a.toLowerCase().replace(/[^a-z0-9\s]/g,'').trim());
+    } else {
+      isCorrect = ua === q.answer;
+    }
+    if (!isCorrect) {
+      hasWrong = true;
+      const correctText = q.type === 'id' ? q.answer : q.options[q.answer];
+      const userText = q.type === 'id' ? (ua || '—') : (ua !== null ? q.options[ua] : '—');
+      reviewList.innerHTML += `
+        <div class="review-item">
+          <div class="review-icon w">✗</div>
+          <div>
+            <div class="review-q">Q${i+1}: ${q.text.replace(/\n/g,' ').substring(0,100)}${q.text.length>100?'...':''}</div>
+            <div class="review-a">Your answer: ${userText}</div>
+            <div class="review-correct">✓ Correct: ${correctText}</div>
+          </div>
+        </div>`;
+    }
   });
-}
-
-/* ═══ AUDIO ═══ */
-var chords=[[220,277.18,329.63],[196,246.94,293.66],[174.61,220,261.63],[185,233.08,277.18],[207.65,261.63,311.13]];
-function initAudio(){
-  try{
-    aCtx=new(window.AudioContext||window.webkitAudioContext)();
-    gainN=aCtx.createGain();gainN.gain.value=0;gainN.connect(aCtx.destination);
-  }catch(e){musicOn=false;}
-}
-function playChord(){
-  if(!aCtx||!musicOn||!musicPlay)return;
-  var ch=chords[chordI%chords.length];chordI++;
-  var env=aCtx.createGain();
-  env.gain.setValueAtTime(0,aCtx.currentTime);
-  env.gain.linearRampToValueAtTime(0.09,aCtx.currentTime+0.9);
-  env.gain.linearRampToValueAtTime(0.055,aCtx.currentTime+3);
-  env.gain.linearRampToValueAtTime(0,aCtx.currentTime+4.8);
-  env.connect(gainN);
-  ch.forEach(function(f,i){
-    var o=aCtx.createOscillator();
-    o.type=i===0?'sine':'triangle';
-    o.frequency.setValueAtTime(f*(i===2?2:1),aCtx.currentTime);
-    o.connect(env);o.start(aCtx.currentTime);o.stop(aCtx.currentTime+5);
-  });
-  chordTID=setTimeout(playChord,4300);
-}
-function startMusic(){
-  if(!aCtx)initAudio();
-  if(!aCtx||!musicOn)return;
-  if(aCtx.state==='suspended')aCtx.resume();
-  gainN.gain.setValueAtTime(0.8,aCtx.currentTime);
-  musicPlay=true;playChord();
-  document.getElementById('musicbtn').textContent='🎵';
-}
-function stopMusic(){
-  musicPlay=false;
-  if(chordTID){clearTimeout(chordTID);chordTID=null;}
-  if(aCtx&&gainN)gainN.gain.linearRampToValueAtTime(0,aCtx.currentTime+0.5);
-  document.getElementById('musicbtn').textContent='🔇';
-}
-function toggleMusic(){if(musicPlay)stopMusic();else startMusic();}
-
-function sfx(type){
-  if(!aCtx)return;
-  if(aCtx.state==='suspended')aCtx.resume();
-  var o=aCtx.createOscillator(),g=aCtx.createGain();
-  o.connect(g);g.connect(aCtx.destination);
-  if(type==='cor'){
-    o.frequency.setValueAtTime(523,aCtx.currentTime);
-    o.frequency.setValueAtTime(659,aCtx.currentTime+0.1);
-    g.gain.setValueAtTime(0.13,aCtx.currentTime);
-    g.gain.exponentialRampToValueAtTime(0.001,aCtx.currentTime+0.4);
-  }else if(type==='wrg'){
-    o.type='sawtooth';
-    o.frequency.setValueAtTime(220,aCtx.currentTime);
-    o.frequency.setValueAtTime(180,aCtx.currentTime+0.15);
-    g.gain.setValueAtTime(0.1,aCtx.currentTime);
-    g.gain.exponentialRampToValueAtTime(0.001,aCtx.currentTime+0.35);
-  }else if(type==='streak'){
-    o.type='triangle';
-    o.frequency.setValueAtTime(660,aCtx.currentTime);
-    o.frequency.setValueAtTime(880,aCtx.currentTime+0.1);
-    o.frequency.setValueAtTime(1100,aCtx.currentTime+0.2);
-    g.gain.setValueAtTime(0.1,aCtx.currentTime);
-    g.gain.exponentialRampToValueAtTime(0.001,aCtx.currentTime+0.5);
-  }
-  o.start(aCtx.currentTime);o.stop(aCtx.currentTime+0.65);
-}
-
-/* ═══ TIMER ═══ */
-function startTimer(){
-  timerID=setInterval(function(){
-    secsLeft--;
-    var m=Math.floor(secsLeft/60),s=secsLeft%60;
-    var el=document.getElementById('timerval');
-    el.textContent=(m<10?'0':'')+m+':'+(s<10?'0':'')+s;
-    el.className='timerval'+(secsLeft<=120?' danger':secsLeft<=300?' warn':'');
-    if(secsLeft<=0){
-      clearInterval(timerID);stopMusic();
-      document.getElementById('timeup').style.display='flex';
-    }
-  },1000);
-}
-
-/* ═══ CONFETTI ═══ */
-function confetti(){
-  var cols=['#1a6bff','#38d9f5','#34d399','#fbbf24','#fb7185','#e8f0ff'];
-  for(var i=0;i<70;i++){
-    (function(delay){
-      setTimeout(function(){
-        var el=document.createElement('div');
-        el.className='cfp';
-        var sz=6+Math.random()*8;
-        el.style.cssText='left:'+(Math.random()*100)+'vw;top:0;background:'+cols[Math.floor(Math.random()*cols.length)]+';width:'+sz+'px;height:'+sz+'px;border-radius:'+(Math.random()>.5?'50%':'2px')+';animation-duration:'+(1.8+Math.random()*2)+'s;';
-        document.body.appendChild(el);
-        setTimeout(function(){if(el.parentNode)el.parentNode.removeChild(el);},4000);
-      },delay);
-    })(i*25);
-  }
-}
-
-/* ═══ FLOAT XP ═══ */
-function floatXP(amt,x,y){
-  var el=document.createElement('div');
-  el.className='xpf';el.textContent='+'+amt+' XP';
-  el.style.cssText='left:'+(x-30)+'px;top:'+(y-10)+'px;';
-  document.body.appendChild(el);
-  setTimeout(function(){if(el.parentNode)el.parentNode.removeChild(el);},1200);
-}
-
-/* ═══ TOAST ═══ */
-function showToast(msg){
-  var t=document.getElementById('toast');
-  t.textContent=msg;t.classList.add('show');
-  if(toastTID)clearTimeout(toastTID);
-  toastTID=setTimeout(function(){t.classList.remove('show');},2400);
-}
-
-/* ═══ START ═══ */
-function startQuiz(){
-  hintsLeft=hintsEn?3:0;
-  document.getElementById('landing').style.display='none';
-  document.getElementById('qscreen').style.display='block';
-  buildQuiz();buildNav();
-  document.getElementById('s-hints').textContent=hintsLeft;
-  startTimer();
-  if(musicOn)setTimeout(startMusic,350);
-  window.scrollTo(0,0);
-}
-
-/* ═══ BUILD QUIZ ═══ */
-function buildQuiz(){
-  var main=document.getElementById('qmain');main.innerHTML='';
-  var sec='';
-  for(var i=0;i<Q.length;i++){
-    var q=Q[i];
-    if(q.s!==sec){
-      sec=q.s;
-      var sep=document.createElement('div');sep.className='ssep';sep.textContent=sec;
-      main.appendChild(sep);
-    }
-    var card=document.createElement('div');
-    card.className='qcard';card.id='qc'+i;
-    card.style.animationDelay=Math.min(i*.018,.5)+'s';
-
-    var typeCls='',typeLbl='';
-    if(q.t==='mcq'){typeCls='tmcq';typeLbl='Multiple Choice';}
-    else if(q.t==='tf'){typeCls='ttf';typeLbl='True / False';}
-    else if(q.t==='id'){typeCls='tid';typeLbl='Identification';}
-    else{typeCls='tfib';typeLbl='Fill in the Blank';}
-
-    var diffCls=q.d==='easy'?'deasy':q.d==='medium'?'dmed':'dhard';
-    var diffLbl=q.d==='easy'?'Easy':q.d==='medium'?'Medium':'Hard';
-
-    var html='<button class="bmbtn" id="bm'+i+'" onclick="toggleBM('+i+',event)">🔖</button>'
-      +'<div class="qmeta">'
-        +'<span class="qnum">'+(i+1)+'</span>'
-        +'<span class="qmetatxt">Q'+(i+1)+'/50</span>'
-        +'<span class="tbadge '+typeCls+'">'+typeLbl+'</span>'
-        +'<span class="dbadge '+diffCls+'">'+diffLbl+'</span>'
-      +'</div>'
-      +'<div class="qtxt">'+buildQText(q,i)+'</div>';
-
-    // hint button — only if hints enabled and question has hint
-    if(hintsEn&&q.h){
-      html+='<button class="hbtn" id="hbtn'+i+'" onclick="useHint('+i+',event)">💡 Hint</button>'
-           +'<div class="hbox" id="hbox'+i+'">'+q.h+'</div>';
-    }
-
-    if(q.t==='mcq')html+=buildMCQ(q,i);
-    else if(q.t==='tf')html+=buildTF(i);
-    else if(q.t==='id')html+=buildID(i);
-    else html+=buildFIBControls(i);
-
-    html+='<div class="fb" id="fb'+i+'"></div>';
-    card.innerHTML=html;
-    main.appendChild(card);
-  }
-}
-
-function buildQText(q,i){
-  if(q.t==='fib'){
-    return q.q.replace('___','<input class="fibinput" id="fibin'+i+'" placeholder="answer" autocomplete="off" autocorrect="off" spellcheck="false">');
-  }
-  return q.q;
-}
-function buildMCQ(q,i){
-  var L=['A','B','C','D'];var h='<div class="opts">';
-  for(var j=0;j<q.o.length;j++){
-    h+='<div class="opt" id="opt'+i+'-'+j+'" onclick="pickMCQ('+i+','+j+')">'
-      +'<div class="oletter">'+L[j]+'</div>'
-      +'<div class="otxt">'+q.o[j]+'</div>'
-      +'</div>';
-  }
-  return h+'</div>';
-}
-function buildTF(i){
-  return '<div class="tfopts">'
-    +'<div class="tfbtn tbtn" id="tf'+i+'-T" onclick="pickTF('+i+',true)">✓ True</div>'
-    +'<div class="tfbtn fbtn" id="tf'+i+'-F" onclick="pickTF('+i+',false)">✗ False</div>'
-    +'</div>';
-}
-function buildID(i){
-  return '<div class="idwrap">'
-    +'<input class="idinput" id="idin'+i+'" placeholder="Type your answer..." autocomplete="off" autocorrect="off" spellcheck="false">'
-    +'<button class="idsub" id="idsub'+i+'" onclick="submitID('+i+')">Submit</button>'
-    +'</div>';
-}
-function buildFIBControls(i){
-  return '<button class="fibsub" id="fibsub'+i+'" onclick="submitFIB('+i+')">Submit Answer</button>';
-}
-
-/* ═══ NAVIGATOR ═══ */
-function buildNav(){
-  var nav=document.getElementById('qnav');nav.innerHTML='';
-  for(var i=0;i<50;i++){
-    var b=document.createElement('div');
-    b.className='qnb';b.id='qnb'+i;b.textContent=i+1;
-    (function(idx){b.onclick=function(){var c=document.getElementById('qc'+idx);if(c)c.scrollIntoView({behavior:'smooth',block:'center'});};})(i);
-    nav.appendChild(b);
-  }
-}
-function updateNav(i,correct){
-  var b=document.getElementById('qnb'+i);
-  if(b)b.className='qnb '+(correct?'ok':'bad');
-}
-
-/* ═══ HINT ═══ */
-function useHint(qi,e){
-  e.stopPropagation();
-  if(answered[qi]!==null)return;
-  if(hintsLeft<=0){showToast('💡 No hints remaining!');return;}
-  hintsLeft--;
-  xp=Math.max(0,xp-5);
-  document.getElementById('s-hints').textContent=hintsLeft;
-  var hbtn=document.getElementById('hbtn'+qi);
-  if(hbtn)hbtn.disabled=true;
-  var hbox=document.getElementById('hbox'+qi);
-  if(hbox)hbox.classList.add('show');
-  updateXP();
-}
-
-/* ═══ BOOKMARK ═══ */
-function toggleBM(i,e){
-  e.stopPropagation();
-  bookmarks[i]=!bookmarks[i];
-  var btn=document.getElementById('bm'+i);
-  if(btn)btn.className='bmbtn'+(bookmarks[i]?' on':'');
-}
-function openRev(){
-  var list=document.getElementById('revlist');list.innerHTML='';
-  var bmarked=[];
-  for(var i=0;i<50;i++){if(bookmarks[i])bmarked.push(i);}
-  if(bmarked.length===0){
-    list.innerHTML='<p style="color:var(--muted);padding:18px 0;">No bookmarks yet. Tap 🔖 on any question.</p>';
-  }else{
-    bmarked.forEach(function(i){
-      var q=Q[i];
-      var status='';
-      if(answered[i]===null)status='<span style="color:var(--muted)">⬜ Not answered</span>';
-      else if(corrArr[i])status='<span style="color:var(--correct)">✓ Correct</span>';
-      else status='<span style="color:var(--wrong)">✗ Incorrect</span>';
-      var div=document.createElement('div');div.className='ritem';
-      div.innerHTML='<div class="ritemq"><b>Q'+(i+1)+':</b> '+q.q+'</div>'
-        +'<div class="ritemfoot">'+status
-        +' <span class="rjump" onclick="jumpTo('+i+')">→ Go to question</span></div>';
-      list.appendChild(div);
-    });
-  }
-  document.getElementById('revpanel').style.display='block';
-}
-function closeRev(){document.getElementById('revpanel').style.display='none';}
-function jumpTo(i){
-  closeRev();
-  setTimeout(function(){
-    var c=document.getElementById('qc'+i);if(c)c.scrollIntoView({behavior:'smooth',block:'center'});
-  },300);
-}
-
-/* ═══ XP ═══ */
-function earnXP(q){
-  if(q.d==='easy')return 10;
-  if(q.d==='medium')return 20;
-  return 35;
-}
-function updateXP(){
-  var pct=Math.min((xp/500)*100,100);
-  document.getElementById('xpfill').style.width=pct+'%';
-  document.getElementById('xpval').textContent=xp;
-}
-
-/* ═══ FINALIZE (shared for all question types) ═══ */
-function finalize(qi,correct,expText,evtX,evtY){
-  if(correct){
-    corrCount++;corrArr[qi]=true;
-    curStreak++;if(curStreak>bestStreak)bestStreak=curStreak;
-    var earned=earnXP(Q[qi])+(curStreak>=3?Math.floor(earnXP(Q[qi])*.5):0);
-    xp+=earned;
-    floatXP(earned,evtX||window.innerWidth/2,evtY||150);
-    sfx('cor');
-    if(curStreak>=3){sfx('streak');showToast('🔥 '+curStreak+' in a row!');}
-    var sc=document.getElementById('streakchip');sc.className='streak-chip hot';
-    setTimeout(function(){sc.className='streak-chip';},2800);
-  }else{
-    wrgCount++;curStreak=0;
-    sfx('wrg');
-    var card=document.getElementById('qc'+qi);
-    card.classList.add('shake');
-    setTimeout(function(){card.classList.remove('shake');},400);
-  }
-  document.getElementById('streaknum').textContent=curStreak;
-  updateXP();updateNav(qi,correct);
-
-  // mark card
-  var card=document.getElementById('qc'+qi);
-  card.classList.add('done',correct?'ok':'bad');
-
-  // feedback
-  var fb=document.getElementById('fb'+qi);
-  fb.className='fb show '+(correct?'ok':'bad');
-  fb.textContent=(correct?'✓ Correct! ':'✗ Incorrect. ')+expText;
-
-  updateStats();
-
-  // confetti milestone every 10 correct
-  if(correct&&corrCount>0&&corrCount%10===0)confetti();
-}
-
-/* ═══ ANSWER HANDLERS ═══ */
-function pickMCQ(qi,oi){
-  if(answered[qi]!==null)return;
-  answered[qi]=oi;
-  var q=Q[qi];var ok=(oi===q.a);
-  var opts=document.querySelectorAll('#qc'+qi+' .opt');
-  for(var j=0;j<opts.length;j++){
-    opts[j].classList.add('dis');
-    if(j===q.a)opts[j].classList.add('cor');
-    else if(j===oi&&!ok)opts[j].classList.add('wrg');
-    else opts[j].classList.add('dim');
-  }
-  var rect=opts[oi].getBoundingClientRect();
-  finalize(qi,ok,q.ex,rect.left+rect.width/2,rect.top+rect.height/2);
-}
-
-function pickTF(qi,choice){
-  if(answered[qi]!==null)return;
-  answered[qi]=choice;
-  var q=Q[qi];var ok=(choice===q.a);
-  var tBtn=document.getElementById('tf'+qi+'-T');
-  var fBtn=document.getElementById('tf'+qi+'-F');
-  tBtn.classList.add('dis');fBtn.classList.add('dis');
-
-  // show which is correct
-  if(q.a===true)tBtn.classList.add('cor');
-  else fBtn.classList.add('cor');
-
-  // show which was chosen wrong
-  if(!ok){
-    if(choice===true)tBtn.classList.add('wrg');
-    else fBtn.classList.add('wrg');
-  }
-
-  // dim the non-correct, non-chosen button
-  if(q.a===true)fBtn.classList.add('dim');
-  else tBtn.classList.add('dim');
-
-  var rect=(choice?tBtn:fBtn).getBoundingClientRect();
-  finalize(qi,ok,q.ex,rect.left+rect.width/2,rect.top+rect.height/2);
-}
-
-function submitID(qi){
-  if(answered[qi]!==null)return;
-  var inp=document.getElementById('idin'+qi);
-  if(!inp)return;
-  var val=inp.value.trim().toLowerCase();
-  if(!val)return;
-  answered[qi]=val;
-  var q=Q[qi];
-  var ok=false;
-  for(var k=0;k<q.ans.length;k++){if(val===q.ans[k]){ok=true;break;}}
-  inp.disabled=true;
-  document.getElementById('idsub'+qi).disabled=true;
-  inp.className='idinput '+(ok?'cor':'wrg');
-  var rect=inp.getBoundingClientRect();
-  finalize(qi,ok,q.ex+(ok?'':' Answer: '+q.ans[0]+'.'),rect.left+rect.width/2,rect.top);
-}
-
-function submitFIB(qi){
-  if(answered[qi]!==null)return;
-  var inp=document.getElementById('fibin'+qi);
-  if(!inp)return;
-  var val=inp.value.trim().toLowerCase();
-  if(!val)return;
-  answered[qi]=val;
-  var q=Q[qi];var ok=false;
-  for(var k=0;k<q.ans.length;k++){
-    if(val===q.ans[k]||q.ans[k].indexOf(val)!==-1||val.indexOf(q.ans[k])!==-1){ok=true;break;}
-  }
-  inp.disabled=true;
-  document.getElementById('fibsub'+qi).disabled=true;
-  inp.className='fibinput '+(ok?'cor':'wrg');
-  var rect=inp.getBoundingClientRect();
-  finalize(qi,ok,q.ex+(ok?'':' Answer: '+q.ans[0]+'.'),rect.left+rect.width/2,rect.top);
-}
-
-/* ═══ STATS ═══ */
-function updateStats(){
-  var done=answered.filter(function(a){return a!==null;}).length;
-  document.getElementById('s-done').textContent=done;
-  document.getElementById('s-cor').textContent=corrCount;
-  document.getElementById('s-wrg').textContent=wrgCount;
-  document.getElementById('bar-done').textContent=done;
-  document.getElementById('pfill').style.width=((done/50)*100)+'%';
-  document.getElementById('subbtn').disabled=(done<50);
-}
-
-/* ═══ KEYBOARD SHORTCUTS ═══ */
-document.addEventListener('keydown',function(e){
-  // only active on quiz screen
-  if(document.getElementById('qscreen').style.display==='none')return;
-
-  // close review panel
-  if(document.getElementById('revpanel').style.display==='block'){
-    if(e.key==='Escape')closeRev();
-    return;
-  }
-
-  // don't fire when typing in an input
-  var tag=document.activeElement?document.activeElement.tagName.toLowerCase():'';
-  if(tag==='input'||tag==='textarea')return;
-
-  // find first unanswered visible card
-  var cards=document.querySelectorAll('.qcard');
-  var ti=-1;
-  for(var i=0;i<cards.length;i++){
-    var r=cards[i].getBoundingClientRect();
-    if(r.top>-80&&r.top<window.innerHeight-80){
-      var idx=parseInt(cards[i].id.replace('qc',''));
-      if(!isNaN(idx)&&answered[idx]===null){ti=idx;break;}
-    }
-  }
-
-  if(e.key==='Escape'){closeRev();return;}
-  if((e.key==='b'||e.key==='B')&&ti>=0){toggleBM(ti,{stopPropagation:function(){}});return;}
-  if((e.key==='h'||e.key==='H')&&ti>=0&&hintsEn){
-    var hbtn=document.getElementById('hbtn'+ti);
-    if(hbtn&&!hbtn.disabled)useHint(ti,{stopPropagation:function(){}});
-    return;
-  }
-  if(ti>=0){
-    var q=Q[ti];
-    if(q.t==='mcq'){
-      var km={'1':0,'2':1,'3':2,'4':3,a:0,b:1,c:2,d:3,A:0,B:1,C:2,D:3};
-      if(km[e.key]!==undefined){e.preventDefault();pickMCQ(ti,km[e.key]);return;}
-    }
-    if(q.t==='tf'){
-      if(e.key==='t'||e.key==='T'){e.preventDefault();pickTF(ti,true);return;}
-      if(e.key==='f'||e.key==='F'){e.preventDefault();pickTF(ti,false);return;}
-    }
-  }
-  if(e.key==='ArrowDown'){window.scrollBy({top:200,behavior:'smooth'});}
-  if(e.key==='ArrowUp'){window.scrollBy({top:-200,behavior:'smooth'});}
-});
-
-// Enter key on ID inputs
-document.addEventListener('keydown',function(e){
-  if(e.key!=='Enter')return;
-  var tag=document.activeElement?document.activeElement.tagName.toLowerCase():'';
-  if(tag!=='input')return;
-  var id=document.activeElement.id||'';
-  var m=id.match(/^idin(\d+)$/);
-  if(m)submitID(parseInt(m[1]));
-});
-
-/* ═══ SUBMIT ═══ */
-function submitQuiz(){
-  var done=answered.filter(function(a){return a!==null;}).length;
-  if(done<50)return;
-  clearInterval(timerID);stopMusic();showResults();
-}
-
-/* ═══ RESULTS ═══ */
-function showResults(){
-  document.getElementById('timeup').style.display='none';
-  document.getElementById('qscreen').style.display='none';
-  var rs=document.getElementById('results');
-  rs.style.display='flex';rs.style.animation='fadeUp .7s ease both';
-
-  var done=answered.filter(function(a){return a!==null;}).length;
-  var pct=Math.round((corrCount/50)*100);
-  var pass=pct>=75;
-  var used=startSecs-secsLeft;
-  var tm=Math.floor(used/60),ts=used%60;
-
-  document.getElementById('res-pct').textContent=pct+'%';
-  document.getElementById('res-grade').textContent=pass?'🎉 Passed':'📖 Keep Studying';
-  document.getElementById('res-grade').className='gbadge '+(pass?'pass':'fail');
-  document.getElementById('res-head').textContent=pass?'Outstanding!':'Keep Pushing!';
-  document.getElementById('res-sub').textContent=pass
-    ?'You scored '+pct+'% — excellent ethics knowledge!'
-    :'You scored '+pct+'%. Review the topics and try again!';
-  document.getElementById('r-score').textContent=pct+'%';
-  document.getElementById('r-cor').textContent=corrCount;
-  document.getElementById('r-wrg').textContent=wrgCount;
-  document.getElementById('r-xp').textContent=xp;
-  document.getElementById('r-str').textContent=bestStreak+'🔥';
-  document.getElementById('r-time').textContent=(tm<10?'0':'')+tm+'m'+(ts<10?'0':'')+ts+'s';
-
-  setTimeout(function(){
-    document.getElementById('ringcircle').style.strokeDashoffset=326.73*(1-pct/100);
-  },400);
-
-  if(pass)setTimeout(confetti,600);
-
-  // breakdown
-  var tc={mcq:{c:0,t:0},tf:{c:0,t:0},id:{c:0,t:0},fib:{c:0,t:0}};
-  for(var i=0;i<Q.length;i++){
-    var qt=Q[i].t;tc[qt].t++;if(corrArr[i])tc[qt].c++;
-  }
-  document.getElementById('bd-mcq').textContent=tc.mcq.c+'/'+tc.mcq.t;
-  document.getElementById('bd-tf').textContent=tc.tf.c+'/'+tc.tf.t;
-  document.getElementById('bd-id').textContent=tc.id.c+'/'+tc.id.t;
-  document.getElementById('bd-fib').textContent=tc.fib.c+'/'+tc.fib.t;
-
-  window.scrollTo(0,0);
-}
-
-/* ═══ RESTART ═══ */
-function restartQuiz(){
-  answered=new Array(50).fill(null);
-  corrArr=new Array(50).fill(false);
-  bookmarks=new Array(50).fill(false);
-  corrCount=0;wrgCount=0;xp=0;curStreak=0;bestStreak=0;
-  hintsLeft=hintsEn?3:0;secsLeft=2700;
-  document.getElementById('results').style.display='none';
-  document.getElementById('qscreen').style.display='block';
-  document.getElementById('xpfill').style.width='0%';
-  document.getElementById('xpval').textContent='0';
-  document.getElementById('streaknum').textContent='0';
-  document.getElementById('streakchip').className='streak-chip';
-  document.getElementById('timerval').className='timerval';
-  document.getElementById('s-hints').textContent=hintsLeft;
-  buildQuiz();buildNav();updateStats();
-  clearInterval(timerID);startTimer();
-  if(musicOn)setTimeout(startMusic,300);
-  window.scrollTo(0,0);
-}
-
-function reviewMode(){
-  document.getElementById('results').style.display='none';
-  document.getElementById('qscreen').style.display='block';
-  window.scrollTo(0,0);
+  if (!hasWrong) reviewList.innerHTML += '<p style="color:var(--muted);text-align:center;padding:1rem">🎉 No mistakes! Perfect or near-perfect session!</p>';
 }
 </script>
 </body>
